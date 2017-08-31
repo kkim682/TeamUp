@@ -1,0 +1,35 @@
+.ui.container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    box-sizing: border-box;
+}
+
+.ui.menu {
+    box-shadow: none;
+    border: none;
+}
+
+.topbar {
+    font-size: 2rem!important;
+}
+
+.ui.button.topbar.sidemenu {
+    border-radius: 0rem;
+}
+
+.ui.form.login-form {
+    padding: 3rem;
+}
+
+.ui.form.signup-form {
+    padding: 3rem;
+}
+
+.landing-wrapper{
+    background: url('../img/bg.jpg');
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: brightness(50%);
+}
