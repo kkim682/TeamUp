@@ -1,6 +1,6 @@
 .ui.container {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     box-sizing: border-box;
 }
 
@@ -21,15 +21,41 @@
     padding: 3rem;
 }
 
-.ui.form.signup-form {
+.ui.form.signUp-form {
     padding: 3rem;
 }
 
-.landing-wrapper{
-    background: url('../img/bg.jpg');
-    height: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    filter: brightness(50%);
+.hero {
+    padding: 13rem;
+    position: relative;
+    background: rgba(0, 0, 0, 0.8);
+    text-align: center;
+}
+
+.hero::after {
+    position: absolute;
+    background: url('../img/landing/bg.jpg') no-repeat;
+    content: "";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+#banner-img {
+    width: 80%;
+    padding: 3rem;
+}
+
+#banner-content {
+    text-align: center;
+    color: #FFFFFF;
+}
+
+
+/*Typography*/
+
+h1 {
+    letter-spacing: 0.25rem;
 }

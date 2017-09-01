@@ -20,8 +20,8 @@ $(document).ready(function () {
             .modal('show');
     });
 
-    $('#signup').click(function () {
-        $('.ui.modal.signup')
+    $('#signUp,#getStarted').click(function () {
+        $('.ui.modal.signUp')
             .modal({
                 inverted: false,
                 allowMultiple: false
