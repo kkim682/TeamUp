@@ -2,15 +2,15 @@
 
 <div class="ui container">
     <div class="ui borderless huge menu">
-        <a class="header item topbar" href="index.php"><img src="img/logo.png" alt="sd" style="height:40px; width: auto"></a>
+        <a class="header item topbar" id="logo" href="index.php"><img src="img/logo.png" alt="Logo" style="height:40px; width: auto"></a>
         <a class="item"> About </a>
         <a class="item"> Features </a>
         <a class="item"> Contact </a>
         <div class="right menu">
-            <div class="item" id="signUp">
-                <div class="ui big basic yellow button">Sign up</div>
+            <div class="item" id="signUp-bttn">
+                <div class="ui big basic yellow button">Sign Up</div>
             </div>
-            <div class="item" id="login">
+            <div class="item" id="login-bttn">
                 <div class="ui big basic button">Login</div>
             </div>
         </div>
@@ -23,19 +23,19 @@
             <p>TeamUp helps students find teammates on skills, interests, and availability.</p>
         </div>
         <img id="banner-img" src="img/landing/banner-img.svg" alt="Banner image">
-        <div class="item" id="getStarted">
+        <div class="item" id="getStarted-bttn">
             <div class="ui big yellow button">Get Started</div>
         </div>
     </div>
 </div>
 
 <!--login modal-->
-<div class="ui mini modal login">
+<div class="ui mini modal" id="login-modal">
     <i class="close icon"></i>
     <div class="header">
         Login
     </div>
-    <form class="ui form login-form">
+    <form class="ui form" id="login-form">
         <div class="field">
             <label>Username</label>
             <input type="text" name="username" placeholder="Username">
@@ -48,17 +48,17 @@
     <div class="actions">
         <div class="ui button cancel">Cancel</div>
         <div class="ui primary button">OK</div>
-        <!--TO DO: validate inputs and proceed to dashboard.php-->
+        <!--TO DO: validate inputs and proceed to teams.php-->
     </div>
 </div>
 
 <!--register modal-->
-<div class="ui small modal signUp">
+<div class="ui small modal" id="signUp-modal">
     <i class="close icon"></i>
     <div class="header">
         Sign Up
     </div>
-    <form class="ui form signUp-form">
+    <form class="ui form" id="signUp-form">
         <div class="field">
             <label>Name</label>
             <div class="two fields">
@@ -99,8 +99,8 @@
     <div class="actions">
         <div class="ui button cancel">Cancel</div>
         <div class="ui primary button">OK</div>
-        <!--TO DO: validate inputs, complete registration, and proceed to dashboard.php-->
+        <!--TO DO: validate inputs, complete registration, and proceed to teams.php-->
     </div>
 </div>
 
-<?php include "site/footer.php"; ?>
+<?php include "site/footer.php "; ?>

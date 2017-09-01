@@ -4,31 +4,31 @@ $(document).ready(function () {
         $('.ui.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');
     });
 
-    
-    $('.ui.modal')
-  .modal({
-    allowMultiple: false
-  });
-    
-    
 
-    $('#login').click(function () {
-        $('.ui.modal.login')
+    $('.ui.modal')
+        .modal({
+            allowMultiple: false
+        });
+
+
+
+    $('#login-bttn').click(function () {
+        $('#login-modal')
             .modal({
                 inverted: false
             })
             .modal('show');
     });
 
-    $('#signUp,#getStarted').click(function () {
-        $('.ui.modal.signUp')
+    $('#signUp-bttn,#getStarted-bttn').click(function () {
+        $('#signUp-modal')
             .modal({
                 inverted: false,
                 allowMultiple: false
             })
             .modal('show');
     });
-    
+
     $('.cancel').click(function () {
         $('.ui.modal')
             .modal('hide');

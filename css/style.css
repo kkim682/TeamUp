@@ -13,15 +13,26 @@
     font-size: 2rem!important;
 }
 
+.ui.button {
+    background: none;
+}
+
 .ui.button.topbar.sidemenu {
     border-radius: 0rem;
 }
 
-.ui.form.login-form {
+#logo:hover {
+    background: none;
+}
+
+
+/*Landing Page*/
+
+#login-form {
     padding: 3rem;
 }
 
-.ui.form.signUp-form {
+#signUp-form {
     padding: 3rem;
 }
 
@@ -51,6 +62,17 @@
 #banner-content {
     text-align: center;
     color: #FFFFFF;
+}
+
+
+/*My Account*/
+
+#editProfile {
+    padding: 2rem 9rem 2rem 9rem;
+}
+
+#editProfile-form {
+    padding: 2rem 0 2rem 0;
 }
 
 
