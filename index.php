@@ -1,4 +1,32 @@
-<?php include "site/header.php"; ?>
+<?php include "site/header.php";
+require "db/accountManagement.php" ?>
+
+<?php 
+$account_manager = new AccountManager;
+
+$error_condition = False;
+$registerList = array('firstname', 'lastname', 'email', 'password', 'confirmpassword', 'school', 'user');
+if (isset($_POST[$registerList[0]])) {
+    for ($i = 0; $i < count($registerList); $i++) {
+        if ($_POST[$registerList[$i]] == "") {
+            $error_condition = True;
+            if (!isset($error_msg)) {
+                $error_msg = "";
+            }
+            $error_msg = $error_msg . " " . $registerList[$i];
+        }
+    }
+    if (!$error_condition) {
+        if ($_POST[$registerList[3]] != $_POST[$registerList[4]]) {
+            $error_msg = "Password does not match";
+        } else {
+            $account_manager->register($_POST[$registerList[0]], $_POST[$registerList[1]], $_POST[$registerList[2]], $_POST[$registerList[3]], $_POST[$registerList[4]], $_POST[$registerList[5]]);
+        }
+    }
+}
+
+
+?>
 
 <div class="ui container">
     <div class="ui borderless huge menu">
@@ -58,7 +86,7 @@
     <div class="header">
         Sign Up
     </div>
-    <form class="ui form" id="signUp-form">
+    <form method="POST" class="ui form" id="signUp-form">
         <div class="field">
             <label>Name</label>
             <div class="two fields">
@@ -80,7 +108,7 @@
         </div>
         <div class="field">
             <label>Confirm Password</label>
-            <input type="password" name="password" placeholder="Confirm Password">
+            <input type="password" name="confirmpassword" placeholder="Confirm Password">
         </div>
         <div class="two fields">
             <div class="field">
@@ -89,18 +117,20 @@
             </div>
             <div class="field">
                 <label>I am a...</label>
-                <select class="ui fluid dropdown">
+                <select class="ui fluid dropdown" name="user">
                 <option value="student">Student</option>
                 <option value="professor">Professor</option>  
                     </select>
             </div>
         </div>
+        <div class="actions">
+            <input class="ui button cancel" type="reset" value="Cancel"> <!-- type="reset" clears all fields-->
+            <input class="ui primary button" id="submitButton" type="submit" value="OK">
+        </div>
+        <?php if (isset($error_msg)) { ?>
+        <div> <?php echo $error_msg; ?> </div>
+        <?php } ?>
     </form>
-    <div class="actions">
-        <div class="ui button cancel">Cancel</div>
-        <div class="ui primary button">OK</div>
-        <!--TO DO: validate inputs, complete registration, and proceed to teams.php-->
-    </div>
 </div>
 
-<?php include "site/footer.php "; ?>
+<?php include "site/footer.php"; ?>
