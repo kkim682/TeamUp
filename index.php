@@ -20,11 +20,22 @@ if (isset($_POST[$registerList[0]])) {
         if ($_POST[$registerList[3]] != $_POST[$registerList[4]]) {
             $error_msg = "Password does not match";
         } else {
-            $account_manager->register($_POST[$registerList[0]], $_POST[$registerList[1]], $_POST[$registerList[2]], $_POST[$registerList[3]], $_POST[$registerList[4]], $_POST[$registerList[5]]);
+            $account_manager->register($_POST[$registerList[0]], $_POST[$registerList[1]], $_POST[$registerList[2]], $_POST[$registerList[3]], $_POST[$registerList[5]], $_POST[$registerList[6]]);
         }
     }
 }
 
+if (isset($_POST['username'])) {
+    if ($_POST['username'] == "" || $_POST['password2'] == "") {
+        $error_msg = "Either email or password is missing";
+    } else {
+        if (!$account_manager->login($_POST['username'], $_POST['password2'])) {
+            $error_msg = "Invalid email or password";
+        } else {
+            //Go to next page here!
+        }
+    }
+}
 
 ?>
 
@@ -63,21 +74,24 @@ if (isset($_POST[$registerList[0]])) {
     <div class="header">
         Login
     </div>
-    <form class="ui form" id="login-form">
+    <form method="POST" class="ui form" id="login-form">
         <div class="field">
-            <label>Username</label>
+            <label>Email</label>
             <input type="text" name="username" placeholder="Username">
         </div>
         <div class="field">
             <label>Password</label>
-            <input type="password" name="password" placeholder="Password">
+            <input type="password" name="password2" placeholder="Password">
         </div>
-    </form>
-    <div class="actions">
-        <div class="ui button cancel">Cancel</div>
-        <div class="ui primary button">OK</div>
+        <div class="actions">
+        <input class="ui button cancel" type="reset" value="Cancel">
+        <input class="ui primary button" type="submit" value="OK">
         <!--TO DO: validate inputs and proceed to teams.php-->
-    </div>
+        </div>
+        <?php if (isset($error_msg)) { ?>
+        <div> <?php echo $error_msg; ?> </div>
+        <?php } ?>
+    </form>
 </div>
 
 <!--register modal-->
