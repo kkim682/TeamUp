@@ -44,6 +44,55 @@
                     </select>
             </div>
         </div>
+                <!--TODO: Add Schedule field for days/hours; Will use basic checkboxes for now-->
+        <div class="grouped fields">
+            <label>Availability</label>
+            <div class="ui message">
+                <p>Please indicate a day(s) you are available for group meetings.<br>You can update this information later.</p>
+            </div>
+            <div class="field">
+                <div class="ui checkbox">
+                    <input type="checkbox" name="mon">
+                    <label>Monday</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui checkbox">
+                    <input type="checkbox" name="tues">
+                    <label>Tuesday</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui checkbox">
+                    <input type="checkbox" name="wed">
+                    <label>Wednesday</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui checkbox">
+                    <input type="checkbox" name="thur">
+                    <label>Thursday</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui checkbox checkbox">
+                    <input type="checkbox" name="fri">
+                    <label>Friday</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui checkbox checkbox">
+                    <input type="checkbox" name="sat">
+                    <label>Saturday</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui checkbox checkbox">
+                    <input type="checkbox" name="sun">
+                    <label>Sunday</label>
+                </div>
+            </div>
+        </div>
     </form>
     <div class="actions">
         <div class="ui primary right floated button">Save</div>
