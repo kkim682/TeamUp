@@ -5,25 +5,10 @@ require "db/accountManagement.php" ?>
 $account_manager = new AccountManager;
 
 //TO DO: Remove error messages for input type validation, except invalid login credentials
-$error_condition = False;
+
 $registerList = array('firstname', 'lastname', 'email', 'password', 'confirmpassword', 'school', 'usertype');
 if (isset($_POST[$registerList[0]])) {
-    for ($i = 0; $i < count($registerList); $i++) {
-        if ($_POST[$registerList[$i]] == "") {
-            $error_condition = True;
-            if (!isset($error_msg)) {
-                $error_msg = "";
-            }
-            $error_msg = $error_msg . " " . $registerList[$i];
-        }
-    }
-    if (!$error_condition) {
-        if ($_POST[$registerList[3]] != $_POST[$registerList[4]]) {
-            $error_msg = "Password does not match";
-        } else {
-            $account_manager->register($_POST[$registerList[0]], $_POST[$registerList[1]], $_POST[$registerList[2]], $_POST[$registerList[3]], $_POST[$registerList[5]], $_POST[$registerList[6]]);
-        }
-    }
+    $account_manager->register($_POST[$registerList[0]], $_POST[$registerList[1]], $_POST[$registerList[2]], $_POST[$registerList[3]], $_POST[$registerList[5]], $_POST[$registerList[6]]);
 }
 
 if (isset($_POST['loginEmail'])) {
