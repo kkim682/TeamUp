@@ -26,11 +26,11 @@ if (isset($_POST[$registerList[0]])) {
     }
 }
 
-if (isset($_POST['username'])) {
-    if ($_POST['username'] == "" || $_POST['password2'] == "") {
+if (isset($_POST['loginEmail'])) {
+    if ($_POST['loginEmail'] == "" || $_POST['loginPassword'] == "") {
         $error_msg = "Either email or password is missing";
     } else {
-        if (!$account_manager->login($_POST['username'], $_POST['password2'])) {
+        if (!$account_manager->login($_POST['loginEmail'], $_POST['loginPassword'])) {
             $error_msg = "Invalid email or password";
         } else {
            header('Location: account.php');  //TO DO: start session; change location to teams.php (once implemented)
@@ -76,30 +76,27 @@ if (isset($_POST['username'])) {
         Login
     </div>
     <form method="POST" class="ui form" id="login-form">
+        <div class="ui error message"></div>
         <div class="field">
             <label>Email</label>
-            <input type="text" name="username" placeholder="Username">
+            <input type="text" name="loginEmail" placeholder="Email">
         </div>
         <div class="field">
             <label>Password</label>
-            <input type="password" name="password2" placeholder="Password">
+            <input type="password" name="loginPassword" placeholder="Password">
         </div>
 
-        <div class="ui error message">
-            <ul class="list">
-            </ul>
-        </div>
+        <!--TO DO: Validate login info without refreshing page (AJAX?)-->
+        <!--TO DO: Reset all forms upon closing modals-->
+        <?php if (isset($error_msg)) {
+            echo "<div class='ui negative message'>".$error_msg."</div>";
+        }?>
 
         <div class="actions">
-            <input class="ui right floated primary button" type="submit" value="OK">
+            <input class="ui right floated primary button" type="submit" id="login" value="OK">
             <input class="ui right floated cancel button" type="button" value="Cancel">
         </div>
 
-        <?php if (isset($error_msg)) { ?>
-        <div>
-            <?php echo $error_msg; ?>
-        </div>
-        <?php } ?>
     </form>
 </div>
 
@@ -110,6 +107,8 @@ if (isset($_POST['username'])) {
         Sign Up
     </div>
     <form method="POST" class="ui form" id="signUp-form">
+
+        <div class="ui error message"></div>
         <div class="field">
             <label>Name</label>
             <div class="two fields">
@@ -147,11 +146,55 @@ if (isset($_POST['username'])) {
             </div>
         </div>
 
-        <div class="ui error message">
-            <ul class="list">
-            </ul>
+        <!--TODO: Add Schedule field for days/hours; Will use basic checkboxes for now-->
+        <div class="grouped fields">
+            <label>Availability</label>
+            <div class="ui message">
+                <p>Please indicate a day(s) you are available for group meetings.<br>You can update this information later.</p>
+            </div>
+            <div class="field">
+                <div class="ui checkbox">
+                    <input type="checkbox" name="mon">
+                    <label>Monday</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui checkbox">
+                    <input type="checkbox" name="tues">
+                    <label>Tuesday</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui checkbox">
+                    <input type="checkbox" name="wed">
+                    <label>Wednesday</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui checkbox">
+                    <input type="checkbox" name="thur">
+                    <label>Thursday</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui checkbox checkbox">
+                    <input type="checkbox" name="fri">
+                    <label>Friday</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui checkbox checkbox">
+                    <input type="checkbox" name="sat">
+                    <label>Saturday</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui checkbox checkbox">
+                    <input type="checkbox" name="sun">
+                    <label>Sunday</label>
+                </div>
+            </div>
         </div>
-
 
         <div class="actions">
             <input class="ui primary right floated button" type="submit" value="OK">

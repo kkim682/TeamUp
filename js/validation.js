@@ -1,10 +1,29 @@
 // Setting for form input validation
 
 $(document).ready(function () {
-    
+
     $('.ui.form')
         .form({
             fields: {
+                loginEmail: {
+                    identifier: 'loginEmail',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please enter your email address.'
+                        }
+                    ],
+                },
+                loginPassword: {
+                    identifier: 'loginPassword',
+                    depends: 'loginEmail',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please enter your password.'
+                        }
+                    ]
+                },
                 firstname: {
                     identifier: 'firstname',
                     rules: [
@@ -16,6 +35,7 @@ $(document).ready(function () {
                 },
                 lastname: {
                     identifier: 'lastname',
+                    depends: 'firstname',
                     rules: [
                         {
                             type: 'empty',
@@ -25,6 +45,7 @@ $(document).ready(function () {
                 },
                 email: {
                     identifier: 'email',
+                    depends: 'lastname',
                     rules: [
                         {
                             type: 'empty',
@@ -39,6 +60,7 @@ $(document).ready(function () {
                 },
                 school: {
                     identifier: 'school',
+                    depends: 'email',
                     rules: [
                         {
                             type: 'empty',
@@ -48,6 +70,7 @@ $(document).ready(function () {
                 },
                 password: {
                     identifier: 'password',
+                    depends: 'email',
                     rules: [
                         {
                             type: 'empty',
@@ -61,6 +84,7 @@ $(document).ready(function () {
                 },
                 confirmpassword: {
                     identifier: 'confirmpassword',
+                    depends: 'password',
                     rules: [
                         {
                             type: 'empty',

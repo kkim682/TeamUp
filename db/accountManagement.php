@@ -18,7 +18,7 @@ class AccountManager {
 	    $select = "SELECT `password` FROM `account` WHERE `email`='$username1'";
 	    $row = $conn->query($select);
 	    if ($row->num_rows == 0) {
-	    	echo "FALSE";
+	    	//echo "FALSE";
 	    	return False;
 	    } else {
 	    	while($temp_row = $row->fetch_assoc()) {
