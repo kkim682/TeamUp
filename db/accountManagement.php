@@ -30,6 +30,4 @@ class AccountManager {
 	    $conn->close();
 	}
 
-}
-
-?>
+}?>

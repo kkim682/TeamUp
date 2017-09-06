@@ -1,6 +1,6 @@
-<?php include "site/header.php";
-require "db/accountManagement.php" ?>
-
+<?php
+require "db/accountManagement.php";
+error_reporting(E_ALL); ini_set('display_errors', '1');?>
 <?php 
 $account_manager = new AccountManager;
 
@@ -18,13 +18,15 @@ if (isset($_POST['loginEmail'])) {
         if (!$account_manager->login($_POST['loginEmail'], $_POST['loginPassword'])) {
             $error_msg = "Invalid email or password";
         } else {
-           header('Location: account.php');  //TO DO: start session; change location to teams.php (once implemented)
+           header('Location:account.php'); 
+           
+           //TO DO: start session; change location to teams.php (once implemented)
         } 
     }
-}
-
+}?>
+<?php
+include "site/header.php";
 ?>
-
 <div class="ui container">
     <div class="ui borderless huge menu">
         <a class="header item topbar" id="logo" href="index.php"><img src="img/logo.png" alt="Logo" style="height:40px; width: auto"></a>
@@ -69,15 +71,9 @@ if (isset($_POST['loginEmail'])) {
         <div class="field">
             <label>Password</label>
             <input type="password" name="loginPassword" placeholder="Password">
-        </div>
-
-        <!--TO DO: Validate login info without refreshing page (AJAX?)-->
-        <!--TO DO: Reset all forms upon closing modals-->
-        <?php if (isset($error_msg)) {
+        </div><?php if (isset($error_msg)) {
             echo "<div class='ui negative message'>".$error_msg."</div>";
-        }?>
-
-        <div class="actions">
+        }?><div class="actions">
             <input class="ui right floated primary button" type="submit" id="login" value="OK">
             <input class="ui right floated cancel button" type="button" value="Cancel">
         </div>
@@ -186,6 +182,4 @@ if (isset($_POST['loginEmail'])) {
             <input class="ui right floated cancel button" type="button" value="Cancel">
         </div>
     </form>
-</div>
-
-<?php include "site/footer.php"; ?>
+</div><?php include "site/footer.php";?>
