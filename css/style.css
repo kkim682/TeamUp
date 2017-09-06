@@ -25,6 +25,16 @@
     background: none;
 }
 
+.actions {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.ui.error.message {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;    
+}
 
 /*Landing Page*/
 

@@ -11,7 +11,6 @@ $(document).ready(function () {
         });
 
 
-
     $('#login-bttn').click(function () {
         $('#login-modal')
             .modal({
@@ -34,6 +33,5 @@ $(document).ready(function () {
             .modal('hide');
     });
 
-
-
 });
+

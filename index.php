@@ -4,8 +4,9 @@ require "db/accountManagement.php" ?>
 <?php 
 $account_manager = new AccountManager;
 
+//TO DO: Remove error messages for input type validation, except invalid login credentials
 $error_condition = False;
-$registerList = array('firstname', 'lastname', 'email', 'password', 'confirmpassword', 'school', 'user');
+$registerList = array('firstname', 'lastname', 'email', 'password', 'confirmpassword', 'school', 'usertype');
 if (isset($_POST[$registerList[0]])) {
     for ($i = 0; $i < count($registerList); $i++) {
         if ($_POST[$registerList[$i]] == "") {
@@ -32,8 +33,8 @@ if (isset($_POST['username'])) {
         if (!$account_manager->login($_POST['username'], $_POST['password2'])) {
             $error_msg = "Invalid email or password";
         } else {
-            //Go to next page here!
-        }
+           header('Location: account.php');  //TO DO: start session; change location to teams.php (once implemented)
+        } 
     }
 }
 
@@ -83,13 +84,21 @@ if (isset($_POST['username'])) {
             <label>Password</label>
             <input type="password" name="password2" placeholder="Password">
         </div>
-        <div class="actions">
-        <input class="ui button cancel" type="reset" value="Cancel">
-        <input class="ui primary button" type="submit" value="OK">
-        <!--TO DO: validate inputs and proceed to teams.php-->
+
+        <div class="ui error message">
+            <ul class="list">
+            </ul>
         </div>
+
+        <div class="actions">
+            <input class="ui right floated primary button" type="submit" value="OK">
+            <input class="ui right floated cancel button" type="button" value="Cancel">
+        </div>
+
         <?php if (isset($error_msg)) { ?>
-        <div> <?php echo $error_msg; ?> </div>
+        <div>
+            <?php echo $error_msg; ?>
+        </div>
         <?php } ?>
     </form>
 </div>
@@ -131,19 +140,23 @@ if (isset($_POST['username'])) {
             </div>
             <div class="field">
                 <label>I am a...</label>
-                <select class="ui fluid dropdown" name="user">
+                <select class="ui fluid dropdown" name="usertype">
                 <option value="student">Student</option>
                 <option value="professor">Professor</option>  
                     </select>
             </div>
         </div>
-        <div class="actions">
-            <input class="ui button cancel" type="reset" value="Cancel"> <!-- type="reset" clears all fields-->
-            <input class="ui primary button" id="submitButton" type="submit" value="OK">
+
+        <div class="ui error message">
+            <ul class="list">
+            </ul>
         </div>
-        <?php if (isset($error_msg)) { ?>
-        <div> <?php echo $error_msg; ?> </div>
-        <?php } ?>
+
+
+        <div class="actions">
+            <input class="ui primary right floated button" type="submit" value="OK">
+            <input class="ui right floated cancel button" type="button" value="Cancel">
+        </div>
     </form>
 </div>
 
