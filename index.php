@@ -5,8 +5,6 @@ error_reporting(E_ALL); ini_set('display_errors', '1');?>
 <?php 
 $account_manager = new AccountManager;
 
-//TO DO: Remove error messages for input type validation, except invalid login credentials
-
 $registerList = array('firstname', 'lastname', 'email', 'password', 'confirmpassword', 'school', 'usertype');
 $dayList = array("mon", "tues", "wed", "thur", "fri", "sat", "sun");
 
@@ -47,7 +45,7 @@ if (isset($_POST['loginEmail'])) {
             $_SESSION['accountManager'] = $accountManager;
             header('Location:account.php'); 
            
-           //TO DO: start session; change location to teams.php (once implemented)
+           //TO DO: change location to teams.php (once implemented)
         } 
     }
     unset($_POST['loginEmail']);

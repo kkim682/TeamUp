@@ -3,7 +3,7 @@
     <div class="item" style="text-align:center;">
         <!--TODO: get user name-->
         <h3>
-            <a href="account.php"> Ahjin Noh</a>
+            <a href="account.php"> <?php echo $rows[0].' '.$rows[1];?></a>
         </h3>
     </div>
     <a class="item" style="text-align:center;" href="teams.php"> My Teams </a>

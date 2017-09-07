@@ -12,8 +12,6 @@
     include "site/header.php";
     include "site/sidebar.php";
 ?>
-
-<!--TO DO: Pull user's information in the fields-->
 <div class="ui container" id="editProfile">
     <h1>My Account</h1>
     <p>Please update your profile and click "Save" when you are finished.</p>
@@ -107,7 +105,6 @@
     <div class="actions">
         <div class="ui primary right floated button">Save</div>
         <div class="ui button right floated cancel">Cancel</div>
-        <!--TO DO: validate inputs and update user information.-->
     </div>
 
 </div>
