@@ -1,57 +1,51 @@
 <?php
 require "include/session.php";
 require "db/accountManagement.php";
-error_reporting(E_ALL); ini_set('display_errors', '1');?>
-<?php 
-$account_manager = new AccountManager;
+require "include/common.php";
+error_reporting(E_ALL); ini_set('display_errors', '1');
 
-$registerList = array('firstname', 'lastname', 'email', 'password', 'confirmpassword', 'school', 'usertype');
-$dayList = array("mon", "tues", "wed", "thur", "fri", "sat", "sun");
+$GLOBALS['account_manager'] = new AccountManager;
 
-$foundDay = False;
-if (isset($_POST[$registerList[0]])) {
-    if ($account_manager->verifyEmail($_POST[$registerList[2]]) == 0) { //Email check needs to be done client side
-        $days="";
-        for ($i = 0; $i < sizeof($dayList); $i++) {
-            if (isset($_POST[$dayList[$i]])) {
-                if (!$foundDay) {
-                    $days = $days . $dayList[$i];
-                    $foundDay = True;
+    function handleLogin() {
+        if (isset($_POST['loginEmail'])) {
+            if ($_POST['loginEmail'] == "" || $_POST['loginPassword'] == "") {
+                $error_msg = "Either email or password is missing";
+            } else {
+                if (!$GLOBALS['account_manager']->login($_POST['loginEmail'], $_POST['loginPassword'])) {
+                    $error_msg = "Invalid email or password";
                 } else {
-                    $days = $days . "," . $dayList[$i];
-                }
+                    $_SESSION['email'] = $_POST['loginEmail'];
+                    $_SESSION['account_manager'] = $GLOBALS['account_manager'];
+                    header('Location:account.php'); 
+                   
+                   //TO DO: change location to teams.php (once implemented)
+                } 
+            }
+            unset($_POST['loginEmail']);
+        }
+    }
+
+    function handleRegister() {
+        $registerList = array('firstname', 'lastname', 'email', 'password', 'confirmpassword', 'school', 'usertype');
+
+        if (isset($_POST[$registerList[0]])) {
+            if ($GLOBALS['account_manager']->verifyEmail($_POST[$registerList[2]]) == 0) { //Email check needs to be done client side
+                $days=determine_days();
+                $GLOBALS['account_manager']->register($_POST[$registerList[0]], $_POST[$registerList[1]], $_POST[$registerList[2]],
+                $_POST[$registerList[3]], $_POST[$registerList[5]], $_POST[$registerList[6]], $days);
+            } else {
+                echo "Duplicate Email"; //Error message needs to be generated client side
+            }
+
+            for ($i = 0; $i < sizeof($registerList); $i++) {
+                unset($_POST[$registerList[$i]]);
             }
         }
-        
-        $account_manager->register($_POST[$registerList[0]], $_POST[$registerList[1]], $_POST[$registerList[2]],
-        $_POST[$registerList[3]], $_POST[$registerList[5]], $_POST[$registerList[6]], $days);
-    } else {
-        echo "Duplicate Email"; //Error message needs to be generated client side
     }
 
-    for ($i = 0; $i < sizeof($registerList); $i++) {
-        unset($_POST[$registerList[$i]]);
-    }
-}
+handleRegister();
+handleLogin();
 
-if (isset($_POST['loginEmail'])) {
-    if ($_POST['loginEmail'] == "" || $_POST['loginPassword'] == "") {
-        $error_msg = "Either email or password is missing";
-    } else {
-        if (!$account_manager->login($_POST['loginEmail'], $_POST['loginPassword'])) {
-            $error_msg = "Invalid email or password";
-        } else {
-            $_SESSION['email'] = $_POST['loginEmail'];
-            $_SESSION['account_manager'] = $account_manager;
-            header('Location:account.php'); 
-           
-           //TO DO: change location to teams.php (once implemented)
-        } 
-    }
-    unset($_POST['loginEmail']);
-
-}?>
-<?php
 include "site/header.php";
 ?>
 <div class="ui container">
