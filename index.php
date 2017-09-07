@@ -11,19 +11,28 @@ $dayList = array("mon", "tues", "wed", "thur", "fri", "sat", "sun");
 
 $foundDay = False;
 if (isset($_POST[$registerList[0]])) {
-    $days="";
-    for ($i = 0; $i < sizeof($dayList); $i++) {
-        if (isset($_POST[$dayList[$i]])) {
-            if (!$foundDay) {
-                $days = $days . $dayList[$i];
-                $foundDay = True;
-            } else {
-                $days = $days . "," . $dayList[$i];
+    if ($account_manager->verifyEmail($_POST[$registerList[2]]) == 0) { //Email check needs to be done client side
+        $days="";
+        for ($i = 0; $i < sizeof($dayList); $i++) {
+            if (isset($_POST[$dayList[$i]])) {
+                if (!$foundDay) {
+                    $days = $days . $dayList[$i];
+                    $foundDay = True;
+                } else {
+                    $days = $days . "," . $dayList[$i];
+                }
             }
         }
+        
+        $account_manager->register($_POST[$registerList[0]], $_POST[$registerList[1]], $_POST[$registerList[2]],
+        $_POST[$registerList[3]], $_POST[$registerList[5]], $_POST[$registerList[6]], $days);
+    } else {
+        echo "Duplicate Email"; //Error message needs to be generated client side
     }
-    $account_manager->register($_POST[$registerList[0]], $_POST[$registerList[1]], $_POST[$registerList[2]],
-    $_POST[$registerList[3]], $_POST[$registerList[5]], $_POST[$registerList[6]], $days);
+
+    for ($i = 0; $i < sizeof($registerList); $i++) {
+        unset($_POST[$registerList[$i]]);
+    }
 }
 
 if (isset($_POST['loginEmail'])) {
@@ -38,6 +47,8 @@ if (isset($_POST['loginEmail'])) {
            //TO DO: start session; change location to teams.php (once implemented)
         } 
     }
+    unset($_POST['loginEmail']);
+
 }?>
 <?php
 include "site/header.php";

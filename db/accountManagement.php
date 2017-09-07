@@ -5,7 +5,9 @@ class AccountManager {
 	function register($first_name, $last_name, $email, $password1, $school, $user, $days) {
 		require("db.php");
 	    $conn = new mysqli($servername, $username, $password, $dbname);
-
+	    if (!$conn) {
+	        die('Could not connect: ' . mysql_error());
+	    }
 	    //Hash should be implemented here
 	    $insert = "INSERT INTO `account`(`first_name`, `last_name`, `email`, `password`, `school`, `user`, `days`) VALUES ('$first_name','$last_name','$email','$password1','$school','$user','$days')";
 	    $conn->query($insert);
@@ -14,7 +16,10 @@ class AccountManager {
 
 	function login($username1, $password1) {
 		require("db.php");
-	    $conn = new mysqli($servername, $username, $password, $dbname);	    
+	    $conn = new mysqli($servername, $username, $password, $dbname);
+	    if (!$conn) {
+	        die('Could not connect: ' . mysql_error());
+	    }
 	    $select = "SELECT `password` FROM `account` WHERE `email`='$username1'";
 	    $row = $conn->query($select);
 	    if ($row->num_rows == 0) {
@@ -27,7 +32,20 @@ class AccountManager {
         	//Hash should be returned / implemented here
         	return $password1 == $new_row;
 	    }
+	    $row->close();
 	    $conn->close();
 	}
+
+	function verifyEmail($email) {
+    require('db.php');
+	$conn = new mysqli($servername, $username, $password, $dbname);
+    if (!$conn) {
+        die('Could not connect: ' . mysql_error());
+    }
+    $result = $conn->query("SELECT * FROM account WHERE email = '$email';");
+    return $result->num_rows;
+    $result->close();
+    $conn->close();
+}
 
 }?>
