@@ -8,8 +8,8 @@ class AccountManager {
 	    if (!$conn) {
 	        die('Could not connect: ' . mysql_error());
 	    }
-	    //Hash should be implemented here
-	    $insert = "INSERT INTO `account`(`first_name`, `last_name`, `email`, `password`, `school`, `user`, `days`) VALUES ('$first_name','$last_name','$email','$password1','$school','$user','$days')";
+	    $hash = password_hash($password1, PASSWORD_DEFAULT);
+	    $insert = "INSERT INTO `account`(`first_name`, `last_name`, `email`, `password`, `school`, `user`, `days`) VALUES ('$first_name','$last_name','$email','$hash','$school','$user','$days')";
 	    $conn->query($insert);
 	    $conn->close();
 	}
@@ -29,8 +29,7 @@ class AccountManager {
 	    	while($temp_row = $row->fetch_assoc()) {
 	            $new_row = $temp_row['password'];
         	}
-        	//Hash should be returned / implemented here
-        	return $password1 == $new_row;
+        	return password_verify($password1, $new_row);
 	    }
 	    $row->close();
 	    $conn->close();
