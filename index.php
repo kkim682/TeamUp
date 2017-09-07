@@ -42,7 +42,7 @@ if (isset($_POST['loginEmail'])) {
             $error_msg = "Invalid email or password";
         } else {
             $_SESSION['email'] = $_POST['loginEmail'];
-            $_SESSION['accountManager'] = $accountManager;
+            $_SESSION['account_manager'] = $account_manager;
             header('Location:account.php'); 
            
            //TO DO: change location to teams.php (once implemented)
