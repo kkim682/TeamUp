@@ -35,11 +35,11 @@
         </div>
         <div class="field">
             <label>Password</label>
-            <input type="password" name="password" placeholder="Password" value="<?php echo $rows[3];?>">
+            <input type="password" name="password" placeholder="Password" value="">
         </div>
         <div class="field">
             <label>Confirm Password</label>
-            <input type="password" name="password" placeholder="Confirm Password" value="<?php echo $rows[3];?>">
+            <input type="password" name="password" placeholder="Confirm Password" value="">
         </div>
         <div class="two fields">
             <div class="field">
