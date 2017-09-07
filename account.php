@@ -1,13 +1,29 @@
 <?php 
-    require "include/session.php";
     require "db/accountManagement.php";
+    require "include/session.php";
 
     if (isset($_SESSION['email'])) {
-        $accountManager = new AccountManager;
-        $rows = $accountManager->retrieveAccountInfo($_SESSION['email']);
+        $account_manager = $_SESSION['account_manager'];
+        $rows = $account_manager->retrieveAccountInfo($_SESSION['email']);
+    } else {
+        header('Location:index.php');
     }
 ?>
+<?php
+$saveList = array('firstname', 'lastname', 'email', 'password', 'confirmpassword', 'school', 'usertype');
+include "include/common.php";
 
+    if (isset($_POST['save'])) {
+        $days = determine_days();
+        if ($account_manager->updateInfo($_POST[$saveList[0]], $_POST[$saveList[1]], $_POST[$saveList[2]], $_POST[$saveList[3]], 
+            $_POST[$saveList[5]], $_POST[$saveList[6]], $days)) {
+            echo "success";
+        } else {
+            echo "failure";
+        }
+    }
+
+?>
 <?php 
     include "site/header.php";
     include "site/sidebar.php";
@@ -15,7 +31,7 @@
 <div class="ui container" id="editProfile">
     <h1>My Account</h1>
     <p>Please update your profile and click "Save" when you are finished.</p>
-    <form class="ui form" id="editProfile-form">
+    <form method="POST" class="ui form" id="editProfile-form">
         <div class="field">
             <label>Name</label>
             <div class="two fields">
@@ -46,7 +62,7 @@
             </div>
             <div class="field">
                 <label>I am a...</label>
-                <select class="ui fluid dropdown">
+                <select class="ui fluid dropdown" name="usertype">
                 <option value="student" <?php if ($rows[5] == "student") { echo "selected='selected'"; }?>>Student</option>
                 <option value="professor" <?php if ($rows[5] == "professor") { echo "selected='selected'"; }?>>Professor</option>  
                 </select>
@@ -101,11 +117,11 @@
                 </div>
             </div>
         </div>
+        <div class="actions">
+            <input class="ui primary right floated button" type="submit" value="Save" name="save">
+            <div class="ui button right floated cancel">Cancel</div>
+        </div>
     </form>
-    <div class="actions">
-        <div class="ui primary right floated button">Save</div>
-        <div class="ui button right floated cancel">Cancel</div>
-    </div>
 
 </div>
 

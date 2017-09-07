@@ -6,18 +6,18 @@ error_reporting(E_ALL); ini_set('display_errors', '1');
 
 $GLOBALS['account_manager'] = new AccountManager;
 
-    function handleLogin() {
+    function handleLogin() { //returns message if wrong, else return nothing
         if (isset($_POST['loginEmail'])) {
             if ($_POST['loginEmail'] == "" || $_POST['loginPassword'] == "") {
                 $error_msg = "Either email or password is missing";
             } else {
                 if (!$GLOBALS['account_manager']->login($_POST['loginEmail'], $_POST['loginPassword'])) {
-                    $error_msg = "Invalid email or password";
+                    return "Invalid email or password";
                 } else {
                     $_SESSION['email'] = $_POST['loginEmail'];
                     $_SESSION['account_manager'] = $GLOBALS['account_manager'];
                     header('Location:account.php'); 
-                   
+                    return;
                    //TO DO: change location to teams.php (once implemented)
                 } 
             }
@@ -36,7 +36,6 @@ $GLOBALS['account_manager'] = new AccountManager;
             } else {
                 echo "Duplicate Email"; //Error message needs to be generated client side
             }
-
             for ($i = 0; $i < sizeof($registerList); $i++) {
                 unset($_POST[$registerList[$i]]);
             }
@@ -44,7 +43,7 @@ $GLOBALS['account_manager'] = new AccountManager;
     }
 
 handleRegister();
-handleLogin();
+$error_msg = handleLogin();
 
 include "site/header.php";
 ?>

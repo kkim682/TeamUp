@@ -75,4 +75,24 @@ class AccountManager {
 	    $conn->close();
 	}
 
+	function updateInfo($first_name, $last_name, $email, $password1, $school, $user, $days) {
+		require('db.php');
+		$conn = new mysqli($servername, $username, $password, $dbname);
+	    if (!$conn) {
+	        return False;
+	    }
+	    $first_name = $conn->real_escape_string($first_name);
+	    $last_name = $conn->real_escape_string($last_name);
+	    $email = $conn->real_escape_string($email);
+	    $password1 = $conn->real_escape_string($password1);
+	    $school = $conn->real_escape_string($school);
+	    $user = $conn->real_escape_string($user);
+	    $days = $conn->real_escape_string($days);
+	   	$hash = password_hash($password1, PASSWORD_DEFAULT);
+		$update = "UPDATE `account` SET `first_name`='$first_name',`last_name`='$last_name',`email`='$email',`password`='$hash',`school`='$school',`user`='$user',`days`='$days' WHERE `email`='$email';";
+        $conn->query($update);
+        return True;
+        $conn->close();
+	}
+
 }?>
