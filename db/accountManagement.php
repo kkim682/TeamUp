@@ -37,15 +37,32 @@ class AccountManager {
 	}
 
 	function verifyEmail($email) {
-    require('db.php');
-	$conn = new mysqli($servername, $username, $password, $dbname);
-    if (!$conn) {
-        die('Could not connect: ' . mysql_error());
-    }
-    $result = $conn->query("SELECT * FROM account WHERE email = '$email';");
-    return $result->num_rows;
-    $result->close();
-    $conn->close();
-}
+	    require('db.php');
+		$conn = new mysqli($servername, $username, $password, $dbname);
+	    if (!$conn) {
+	        die('Could not connect: ' . mysql_error());
+	    }
+	    $result = $conn->query("SELECT * FROM account WHERE email = '$email';");
+	    return $result->num_rows;
+	    $result->close();
+	    $conn->close();
+	}
+
+	function retrieveAccountInfo($email) {
+		require('db.php');
+		$conn = new mysqli($servername, $username, $password, $dbname);
+	    if (!$conn) {
+	        die('Could not connect: ' . mysql_error());
+	    }
+	    $result = $conn->query("SELECT first_name, last_name, email, password, school, user, days FROM account WHERE email = '$email';");
+	    while ($row = mysqli_fetch_array($result, MYSQLI_NUM)) {
+	        for ($i = 0; $i < sizeof($row); $i++) {
+	            $rows[] = $row[$i];
+	        }
+	    }
+	    return $rows;
+	    $result->close();
+	    $conn->close();
+	}
 
 }?>

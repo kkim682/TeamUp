@@ -1,4 +1,5 @@
 <?php
+require "include/session.php";
 require "db/accountManagement.php";
 error_reporting(E_ALL); ini_set('display_errors', '1');?>
 <?php 
@@ -42,7 +43,9 @@ if (isset($_POST['loginEmail'])) {
         if (!$account_manager->login($_POST['loginEmail'], $_POST['loginPassword'])) {
             $error_msg = "Invalid email or password";
         } else {
-           header('Location:account.php'); 
+            $_SESSION['email'] = $_POST['loginEmail'];
+            $_SESSION['accountManager'] = $accountManager;
+            header('Location:account.php'); 
            
            //TO DO: start session; change location to teams.php (once implemented)
         } 
