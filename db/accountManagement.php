@@ -2,12 +2,12 @@
 
 class AccountManager {
 
-	function register($first_name, $last_name, $email, $password1, $school, $user) {
+	function register($first_name, $last_name, $email, $password1, $school, $user, $days) {
 		require("db.php");
 	    $conn = new mysqli($servername, $username, $password, $dbname);
 
 	    //Hash should be implemented here
-	    $insert = "INSERT INTO `account`(`first_name`, `last_name`, `email`, `password`, `school`,`user`) VALUES ('$first_name','$last_name','$email','$password1','$school','$user')";
+	    $insert = "INSERT INTO `account`(`first_name`, `last_name`, `email`, `password`, `school`, `user`, `days`) VALUES ('$first_name','$last_name','$email','$password1','$school','$user','$days')";
 	    $conn->query($insert);
 	    $conn->close();
 	}

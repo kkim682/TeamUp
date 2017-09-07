@@ -7,8 +7,23 @@ $account_manager = new AccountManager;
 //TO DO: Remove error messages for input type validation, except invalid login credentials
 
 $registerList = array('firstname', 'lastname', 'email', 'password', 'confirmpassword', 'school', 'usertype');
+$dayList = array("mon", "tues", "wed", "thur", "fri", "sat", "sun");
+
+$foundDay = False;
 if (isset($_POST[$registerList[0]])) {
-    $account_manager->register($_POST[$registerList[0]], $_POST[$registerList[1]], $_POST[$registerList[2]], $_POST[$registerList[3]], $_POST[$registerList[5]], $_POST[$registerList[6]]);
+    $days="";
+    for ($i = 0; $i < sizeof($dayList); $i++) {
+        if (isset($_POST[$dayList[$i]])) {
+            if (!$foundDay) {
+                $days = $days . $dayList[$i];
+                $foundDay = True;
+            } else {
+                $days = $days . "," . $dayList[$i];
+            }
+        }
+    }
+    $account_manager->register($_POST[$registerList[0]], $_POST[$registerList[1]], $_POST[$registerList[2]],
+    $_POST[$registerList[3]], $_POST[$registerList[5]], $_POST[$registerList[6]], $days);
 }
 
 if (isset($_POST['loginEmail'])) {
