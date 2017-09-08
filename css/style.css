@@ -75,17 +75,29 @@
 }
 
 
-/*My Account*/
+/*Wrapper*/
 
-#editProfile {
+#main-wrapper {
     padding: 2rem 9rem 2rem 9rem;
 }
 
-#editProfile-form {
+#sub-wrapper {
     padding: 2rem 0 2rem 0;
 }
 
+/*Items*/
+.ui.items>.item{
+    max-height: 150px;
+    background-color:#e7e7e7;
+    padding: 2rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    
+}
 
+.ui.items>.item:hover {
+    background-color:#eaae00;
+}
 /*Typography*/
 
 h1 {

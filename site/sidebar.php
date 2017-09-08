@@ -1,7 +1,6 @@
 <div class="ui sidebar inverted vertical menu">
     <img class="ui tiny circular image centered" src="img/default.jpg" style="margin: 25px auto 15px auto" alt="Placeholder default profile photo">
     <div class="item" style="text-align:center;">
-        <!--TODO: get user name-->
         <h3>
             <a href="account.php"> <?php echo $rows[0].' '.$rows[1];?></a>
         </h3>
@@ -16,7 +15,13 @@
     <div class="ui container">
         <div class="ui borderless menu">
             <button id="menu" class="ui icon button topbar sidemenu"><i class="sidebar icon"></i></button>
-            <a class="header item topbar" id="logo" href="index.php"><img src="img/logo.png" alt="sd" style="height:40px; width: auto"></a>
+            <a class="header item topbar" id="logo"
+                <?php if (isset($_SESSION['email'])) {
+                    echo('href="teams.php"');
+                } else {
+                    echo('href="index.php"');
+                }?>
+                ><img src="img/logo.png" alt="sd" style="height:40px; width: auto"></a>
         </div>
 
     </div>

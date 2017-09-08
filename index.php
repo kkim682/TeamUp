@@ -16,9 +16,8 @@ $GLOBALS['account_manager'] = new AccountManager;
                 } else {
                     $_SESSION['email'] = $_POST['loginEmail'];
                     $_SESSION['account_manager'] = $GLOBALS['account_manager'];
-                    header('Location:account.php'); 
+                    header('Location:teams.php'); 
                     return;
-                   //TO DO: change location to teams.php (once implemented)
                 } 
             }
             unset($_POST['loginEmail']);

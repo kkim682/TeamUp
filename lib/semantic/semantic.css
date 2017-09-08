@@ -25778,9 +25778,13 @@ Floated Menu / Item
  }
  
  .ui.items a.item:hover .content .header,
- .ui.link.items>.item:hover .content .header {
-     color: #1e70bf;
+ .ui.items a.item:hover .content .description,
+ .ui.link.items>.item:hover .content .header,
+ .ui.link.items>.item:hover .content .description {
+     color: #FFFFFF;
  }
+
+
  /*--------------
       Size
 ---------------*/

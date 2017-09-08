@@ -28,10 +28,11 @@ include "include/common.php";
     include "site/header.php";
     include "site/sidebar.php";
 ?>
-<div class="ui container" id="editProfile">
-    <h1>My Account</h1>
+<div class="ui container" id="mainwrapper">
+    <h2>My Account</h2>
     <p>Please update your profile and click "Save" when you are finished.</p>
-    <form method="POST" class="ui form" id="editProfile-form">
+    <form method="POST" class="ui form" id="sub-wrapper">
+       <div class="ui error message"></div>
         <div class="field">
             <label>Name</label>
             <div class="two fields">
