@@ -9,7 +9,7 @@ $GLOBALS['account_manager'] = new AccountManager;
     function handleLogin() { //returns message if wrong, else return nothing
         if (isset($_POST['loginEmail'])) {
             if ($_POST['loginEmail'] == "" || $_POST['loginPassword'] == "") {
-                $error_msg = "Either email or password is missing";
+                $error_msg = "Either email or password is missing"; //already validated on client-side
             } else {
                 if (!$GLOBALS['account_manager']->login($_POST['loginEmail'], $_POST['loginPassword'])) {
                     return "Invalid email or password";
@@ -145,57 +145,39 @@ include "site/header.php";
                     </select>
             </div>
         </div>
-
-        <!--TODO: Add Schedule field for days/hours; Will use basic checkboxes for now-->
+        
         <div class="grouped fields">
             <label>Availability</label>
-            <div class="ui message">
+            <div class="ui info message">
                 <p>Please indicate a day(s) you are available for group meetings.<br>You can update this information later.</p>
             </div>
-            <div class="field">
-                <div class="ui checkbox">
-                    <input type="checkbox" name="mon">
-                    <label>Monday</label>
-                </div>
-            </div>
-            <div class="field">
-                <div class="ui checkbox">
-                    <input type="checkbox" name="tues">
-                    <label>Tuesday</label>
-                </div>
-            </div>
-            <div class="field">
-                <div class="ui checkbox">
-                    <input type="checkbox" name="wed">
-                    <label>Wednesday</label>
-                </div>
-            </div>
-            <div class="field">
-                <div class="ui checkbox">
-                    <input type="checkbox" name="thur">
-                    <label>Thursday</label>
-                </div>
-            </div>
-            <div class="field">
-                <div class="ui checkbox checkbox">
-                    <input type="checkbox" name="fri">
-                    <label>Friday</label>
-                </div>
-            </div>
-            <div class="field">
-                <div class="ui checkbox checkbox">
-                    <input type="checkbox" name="sat">
-                    <label>Saturday</label>
-                </div>
-            </div>
-            <div class="field">
-                <div class="ui checkbox checkbox">
-                    <input type="checkbox" name="sun">
-                    <label>Sunday</label>
-                </div>
-            </div>
+            <?php
+                $dayArr=array('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday');
+                $timeArr=array('Morning','Afternoon','Evening');
+            ?>
+            <table class="ui basic padded center aligned table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Morning</th>
+                        <th>Afternoon</th>
+                        <th>Evening</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php 
+                    for ($i=0; $i<count($dayArr);$i++){
+                        echo "<tr><td>".$dayArr[$i]."</td>";
+                        for ($j=0; $j <count($timeArr); $j++){
+                            echo "<td><div class='ui fitted checkbox'><input type='checkbox' name='".$dayArr[$i].$timeArr[$j]."'><label></label></div></td>";
+                        }
+                        echo "</tr>";
+                    }    
+                ?>
+                </tbody>
+            </table>                                                                                                             
         </div>
-
+       
         <div class="actions">
             <input class="ui primary right floated button" type="submit" value="OK">
             <input class="ui right floated cancel button" type="button" value="Cancel">

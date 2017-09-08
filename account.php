@@ -28,7 +28,7 @@ include "include/common.php";
     include "site/header.php";
     include "site/sidebar.php";
 ?>
-<div class="ui container" id="mainwrapper">
+<div class="ui container" id="main-wrapper">
     <h2>My Account</h2>
     <p>Please update your profile and click "Save" when you are finished.</p>
     <form method="POST" class="ui form" id="sub-wrapper">
@@ -69,54 +69,34 @@ include "include/common.php";
                 </select>
             </div>
         </div>
-                <!--TODO: Add Schedule field for days/hours; Will use basic checkboxes for now-->
+        <!--TODO: Place user's schedule-->        
         <div class="grouped fields">
             <label>Availability</label>
-            <div class="ui message">
-                <p>Please indicate a day(s) you are available for group meetings.<br>You can update this information later.</p>
-            </div>
-            <div class="field">
-                <div class="ui checkbox">
-                    <input type="checkbox" name="mon" <?php if (strpos($rows[6], 'mon') !== false) { echo "checked";}?>>
-                    <label>Monday</label>
-                </div>
-            </div>
-            <div class="field">
-                <div class="ui checkbox">
-                    <input type="checkbox" name="tues" <?php if (strpos($rows[6], 'tues') !== false) { echo "checked";}?>>
-                    <label>Tuesday</label>
-                </div>
-            </div>
-            <div class="field">
-                <div class="ui checkbox">
-                    <input type="checkbox" name="wed" <?php if (strpos($rows[6], 'wed') !== false) { echo "checked";}?>>
-                    <label>Wednesday</label>
-                </div>
-            </div>
-            <div class="field">
-                <div class="ui checkbox">
-                    <input type="checkbox" name="thur" <?php if (strpos($rows[6], 'thur') !== false) { echo "checked";}?>>
-                    <label>Thursday</label>
-                </div>
-            </div>
-            <div class="field">
-                <div class="ui checkbox checkbox">
-                    <input type="checkbox" name="fri" <?php if (strpos($rows[6], 'fri') !== false) { echo "checked";}?>>
-                    <label>Friday</label>
-                </div>
-            </div>
-            <div class="field">
-                <div class="ui checkbox checkbox">
-                    <input type="checkbox" name="sat" <?php if (strpos($rows[6], 'sat') !== false) { echo "checked";}?>>
-                    <label>Saturday</label>
-                </div>
-            </div>
-            <div class="field">
-                <div class="ui checkbox checkbox">
-                    <input type="checkbox" name="sun" <?php if (strpos($rows[6], 'sun') !== false) { echo "checked";}?>>
-                    <label>Sunday</label>
-                </div>
-            </div>
+            <?php
+                $dayArr=array('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday');
+                $timeArr=array('Morning','Afternoon','Evening');
+            ?>
+            <table class="ui basic padded center aligned table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Morning</th>
+                        <th>Afternoon</th>
+                        <th>Evening</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php 
+                    for ($i=0; $i<count($dayArr);$i++){
+                        echo "<tr><td>".$dayArr[$i]."</td>";
+                        for ($j=0; $j <count($timeArr); $j++){
+                            echo "<td><div class='ui fitted checkbox'><input type='checkbox' name='".$dayArr[$i].$timeArr[$j]."'><label></label></div></td>";
+                        }
+                        echo "</tr>";
+                    }    
+                ?>
+                </tbody>
+            </table>                                                                                                             
         </div>
         <div class="actions">
             <input class="ui primary right floated button" type="submit" value="Save" name="save">
