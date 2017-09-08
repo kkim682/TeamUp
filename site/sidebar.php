@@ -1,3 +1,11 @@
+<?php
+if (isset($_GET['logout'])) {
+    if ($_GET['logout'] == 1) {
+        session_destroy();
+        header('location:index.php');
+    }
+}
+?>
 <div class="ui sidebar inverted vertical menu">
     <img class="ui tiny circular image centered" src="img/default.jpg" style="margin: 25px auto 15px auto" alt="Placeholder default profile photo">
     <div class="item" style="text-align:center;">
@@ -8,7 +16,7 @@
     <a class="item" style="text-align:center;" href="teams.php"> My Teams </a>
     <a class="item" style="text-align:center;" href="courses.php"> My Courses </a>
     <a class="item" style="text-align:center;" href="account.php"> My Account </a>
-    <a class="item" style="text-align:center;"> Logout </a>
+    <a class="item" style="text-align:center;" href="?logout=1"> Logout </a>
 </div>
 
 <div class="pusher">
