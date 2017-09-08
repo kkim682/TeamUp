@@ -24,24 +24,22 @@ $GLOBALS['account_manager'] = new AccountManager;
         }
     }
 
-    function handleRegister() {
-        $registerList = array('firstname', 'lastname', 'email', 'password', 'confirmpassword', 'school', 'usertype');
-
-        if (isset($_POST[$registerList[0]])) {
-            if ($GLOBALS['account_manager']->verifyEmail($_POST[$registerList[2]]) == 0) { //Email check needs to be done client side
-                $days=determine_days();
-                $GLOBALS['account_manager']->register($_POST[$registerList[0]], $_POST[$registerList[1]], $_POST[$registerList[2]],
-                $_POST[$registerList[3]], $_POST[$registerList[5]], $_POST[$registerList[6]], $days);
+    function handleRegister($nameArr, $dayArr, $timeArr) {
+        if (isset($_POST[$nameArr[0]])) {
+            if ($GLOBALS['account_manager']->verifyEmail($_POST[$nameArr[2]]) == 0) { //Email check needs to be done client side
+                $days=determine_days($dayArr, $timeArr);
+                $GLOBALS['account_manager']->register($_POST[$nameArr[0]], $_POST[$nameArr[1]], $_POST[$nameArr[2]],
+                $_POST[$nameArr[3]], $_POST[$nameArr[5]], $_POST[$nameArr[6]], $days);
             } else {
                 echo "Duplicate Email"; //Error message needs to be generated client side
             }
-            for ($i = 0; $i < sizeof($registerList); $i++) {
-                unset($_POST[$registerList[$i]]);
+            for ($i = 0; $i < sizeof($nameArr); $i++) {
+                unset($_POST[$nameArr[$i]]);
             }
         }
     }
 
-handleRegister();
+handleRegister($nameArr, $dayArr, $timeArr);
 $error_msg = handleLogin();
 
 include "site/header.php";
@@ -151,10 +149,6 @@ include "site/header.php";
             <div class="ui info message">
                 <p>Please indicate a day(s) you are available for group meetings.<br>You can update this information later.</p>
             </div>
-            <?php
-                $dayArr=array('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday');
-                $timeArr=array('Morning','Afternoon','Evening');
-            ?>
             <table class="ui basic padded center aligned table">
                 <thead>
                     <tr>

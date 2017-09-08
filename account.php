@@ -3,26 +3,29 @@
     require "include/session.php";
 
     if (isset($_SESSION['email'])) {
-        $account_manager = $_SESSION['account_manager'];
+        $GLOBALS['account_manager'] = $_SESSION['account_manager'];
         $rows = $account_manager->retrieveAccountInfo($_SESSION['email']);
     } else {
         header('Location:index.php');
     }
 ?>
 <?php
-$saveList = array('firstname', 'lastname', 'email', 'password', 'confirmpassword', 'school', 'usertype');
 include "include/common.php";
 
-    if (isset($_POST['save'])) {
-        $days = determine_days();
-        if ($account_manager->updateInfo($_POST[$saveList[0]], $_POST[$saveList[1]], $_POST[$saveList[2]], $_POST[$saveList[3]], 
-            $_POST[$saveList[5]], $_POST[$saveList[6]], $days)) {
-            echo "success";
-        } else {
-            echo "failure";
+    function save($nameArr, $dayArr, $timeArr) {
+        if (isset($_POST['save'])) {
+            $days = determine_days($dayArr, $timeArr);
+            if ($GLOBALS['account_manager']->updateInfo($_POST[$nameArr[0]], $_POST[$nameArr[1]], $_POST[$nameArr[2]], $_POST[$nameArr[3]], 
+                $_POST[$nameArr[5]], $_POST[$nameArr[6]], $days)) {
+                echo "success";
+            } else {
+                echo "failure";
+            }
+            unset($_POST['save']);
         }
     }
 
+save($nameArr, $dayArr, $timeArr);
 ?>
 <?php 
     include "site/header.php";
@@ -72,10 +75,6 @@ include "include/common.php";
         <!--TODO: Place user's schedule-->        
         <div class="grouped fields">
             <label>Availability</label>
-            <?php
-                $dayArr=array('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday');
-                $timeArr=array('Morning','Afternoon','Evening');
-            ?>
             <table class="ui basic padded center aligned table">
                 <thead>
                     <tr>
@@ -86,11 +85,15 @@ include "include/common.php";
                     </tr>
                 </thead>
                 <tbody>
-                <?php 
+                <?php
                     for ($i=0; $i<count($dayArr);$i++){
                         echo "<tr><td>".$dayArr[$i]."</td>";
                         for ($j=0; $j <count($timeArr); $j++){
-                            echo "<td><div class='ui fitted checkbox'><input type='checkbox' name='".$dayArr[$i].$timeArr[$j]."'><label></label></div></td>";
+                            if (strpos($rows[6], ($dayArr[$i].$timeArr[$j]))!== false) {
+                                echo "<td><div class='ui fitted checkbox'><input type='checkbox' name='".($dayArr[$i].$timeArr[$j])."' checked><label></label></div></td>";
+                            } else {
+                                echo "<td><div class='ui fitted checkbox'><input type='checkbox' name='".($dayArr[$i].$timeArr[$j])."'><label></label></div></td>";
+                            }
                         }
                         echo "</tr>";
                     }    
