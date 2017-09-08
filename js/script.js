@@ -7,14 +7,17 @@ $(document).ready(function () {
 
     $('.ui.modal')
         .modal({
-            allowMultiple: false
+            allowMultiple: false   
         });
 
 
     $('#login-bttn').click(function () {
         $('#login-modal')
             .modal({
-                inverted: false
+                inverted: false,
+                onHidden: function(){
+                    $('#login-form').find('input[type=password],input[type=text]').val('');
+                }
             })
             .modal('show');
     });
@@ -23,8 +26,11 @@ $(document).ready(function () {
         $('#signUp-modal')
             .modal({
                 inverted: false,
-                allowMultiple: false
-            })
+                onHidden: function(){
+                    $('#signUp-form').find('input[type=password],input[type=text]').val('');
+                    $('#signUp-form').find('input[type=checkbox]').prop('checked', false);
+                }            
+        })
             .modal('show');
     });
 

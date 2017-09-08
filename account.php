@@ -100,7 +100,7 @@ include "include/common.php";
         </div>
         <div class="actions">
             <input class="ui primary right floated button" type="submit" value="Save" name="save">
-            <div class="ui button right floated cancel">Cancel</div>
+            <input class="ui button right floated cancel" type="reset" value="Cancel">
         </div>
     </form>
 
