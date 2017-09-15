@@ -15,7 +15,7 @@
 <!--Note: This page is rough-->
 <div class="ui container" id="main-wrapper">
     <h2>My Teams</h2>
-    <!--TODO: dynamically pull course list/info-->
+    <!--TODO: dynamically pull teams list/info-->
     <div class="ui link items" id="sub-wrapper">
 
         <a class="item" href="">

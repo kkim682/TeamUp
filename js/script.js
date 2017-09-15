@@ -34,6 +34,17 @@ $(document).ready(function () {
             .modal('show');
     });
 
+    $('#newCourse-bttn').click(function () {
+        $('#newCourse-modal')
+            .modal({
+                inverted: false,
+                onHidden: function(){
+                    $('#newCourse-form').find('input[type=text]').val('');
+                }
+            })
+            .modal('show');
+    });
+    
     $('.cancel').click(function () {
         $('.ui.modal')
             .modal('hide');

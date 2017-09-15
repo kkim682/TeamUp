@@ -95,7 +95,35 @@ $(document).ready(function () {
                             prompt: 'The passwords must match.'
                         }
                     ]
-                }
+                },
+                courseName: {
+                    identifier: 'courseName',
+                     rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please enter course name.'
+                        }
+                    ]
+                },
+                
+                courseDescription: {
+                    identifier: 'courseDescription',
+                     rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please enter course description.'
+                        }
+                    ]
+                },
+                courseCode: {
+                    identifier: 'courseCode',
+                     rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please enter a course code.'
+                        }
+                    ]
+                },
             }
         });
 

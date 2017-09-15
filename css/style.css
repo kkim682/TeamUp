@@ -38,11 +38,7 @@
 
 /*Landing Page*/
 
-#login-form {
-    padding: 3rem;
-}
-
-#signUp-form {
+.form {
     padding: 3rem;
 }
 
