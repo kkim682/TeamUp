@@ -1,11 +1,14 @@
-<div class="ui sidebar inverted vertical menu">
+   <div class="ui sidebar inverted vertical menu">
     <img class="ui tiny circular image centered" src="img/default.jpg" style="margin: 25px auto 15px auto" alt="Placeholder default profile photo">
     <div class="item" style="text-align:center;">
         <h3>
             <a href="account.php"> <?php echo $rows[0].' '.$rows[1];?></a>
         </h3>
     </div>
-    <a class="item" style="text-align:center;" href="teams.php"> My Teams </a>
+    <?php
+        if ($rows[5]=='student') {
+        echo "<a class='item' style='text-align:center;' href='teams.php'> My Teams </a>";
+    }?> 
     <a class="item" style="text-align:center;" href="courses.php"> My Courses </a>
     <a class="item" style="text-align:center;" href="account.php"> My Account </a>
     <a class="item" style="text-align:center;" href="logout.php"> Logout </a>

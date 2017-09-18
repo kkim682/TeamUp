@@ -68,7 +68,7 @@ if (isset($_POST['courseCode'])) {
 
     <div class="ui container" id="main-wrapper">
         <h2>My Courses</h2>
-        <a class="ui primary yellow button" id="newCourse-bttn">
+        <a class="ui primary button" id="newCourse-bttn">
                 <div class="header">
                     Create a new course
                 </div>

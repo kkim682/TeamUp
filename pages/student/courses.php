@@ -3,7 +3,12 @@
 <div class="ui container" id="main-wrapper">
     <h2>My Courses</h2>
     <div class="ui link items" id="sub-wrapper">
-
+        <a class="ui primary button" id="newCourse-bttn">
+                <div class="header">
+                    Add a new course
+                </div>
+        </a>
+        <div class="ui link items" id="sub-wrapper">
         <!------TODO: dynamically pull course list/info------>
         <a class="item" href="">
             <!--link to "course page"-->
