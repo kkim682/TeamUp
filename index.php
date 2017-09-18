@@ -39,6 +39,10 @@ $GLOBALS['account_manager'] = new AccountManager;
         }
     }
 
+if (isset($_SESSION['email'])) {
+    header('Location:teams.php');
+}
+
 handleRegister($nameArr, $dayArr, $timeArr);
 $error_msg = handleLogin();
 
