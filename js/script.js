@@ -49,5 +49,7 @@ $(document).ready(function () {
         $('.ui.modal')
             .modal('hide');
     });
+    
+$("#courseCode").on("keydown", function (e) { return e.which !== 32; });
 
 });

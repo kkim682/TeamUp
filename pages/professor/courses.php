@@ -15,7 +15,7 @@
                 "`courseName` varchar(10) NOT NULL,".
                 "`courseDescription` varchar(255) NOT NULL,".
                 "`year` YEAR(4) NOT NULL,".
-                "`term` enum('spring', 'summer', 'fall') NOT NULL,".
+                "`term` enum('Spring', 'Summer', 'Fall') NOT NULL,".
                 "`section` varchar(1) NOT NULL,".
                 "`teamSize` enum('1', '2', '3', '4', '5') NOT NULL,".
                 "PRIMARY KEY (`code`),".
@@ -29,16 +29,16 @@
         }
         if ($existence) {
             $sql = "select `courseCode` from `".$rows[2]."_course_list` where courseName='".$_POST['courseName'].
-                "' and year='".$_POST['year']."' and term='".$_POST['Term']."'";
+                "' and year='".$_POST['year']."' and term='".$_POST['term']."'";
             $existence = mysqli_query($conn, $sql);
             if (!$existence) {
                 $insert = "INSERT INTO `".$rows[2]."_course_list` VALUES ('".
-                    $_POST['courseCode']."','".
-                    $_POST['courseName']."','".
-                    $_POST['courseDescription']."','".
+                    strtoupper($_POST['courseCode'])."','".
+                    strtoupper($_POST['courseName'])."','".
+                    ucwords($_POST['courseDescription'])."','".
                     $_POST['year']."','".
-                    $_POST['Term']."','".
-                    $_POST['section']."','".
+                    $_POST['term']."','".
+                    strtoupper($_POST['section'])."','".
                     $_POST['teamSize']."')";
                 $result = mysqli_query($conn, $insert);
                 // confirm insertion
@@ -54,7 +54,7 @@
             unset($_POST['courseName']);
             unset($_POST['courseDescription']);
             unset($_POST['year']);
-            unset($_POST['Term']);
+            unset($_POST['term']);
             unset($_POST['section']);
             unset($_POST['teamSize']);
         }
@@ -69,11 +69,9 @@ if (isset($_POST['courseCode'])) {
     <div class="ui container" id="main-wrapper">
         <h2>My Courses</h2>
         <a class="ui primary yellow button" id="newCourse-bttn">
-            <div class="content">
                 <div class="header">
                     Create a new course
                 </div>
-            </div>
         </a>
         <div class="ui link items" id="sub-wrapper">
 
@@ -85,14 +83,14 @@ if (isset($_POST['courseCode'])) {
             $existence = mysqli_query($conn, "desc `".$rows[2]."_course_list`");
             if ($existence) {
                 while ($row = mysqli_fetch_assoc($result)) {
-                    echo '<a class="item" href="">';
+                    echo '<a class="item" href="">'; //link to course page
                     echo '    <div class="content">';
                     echo '        <div class="header">';
                     echo $row['courseName'].' '.$row['section'];
                     echo '        </div>';
                     echo '        <div class="description">';
                     echo $row['courseDescription'].
-                        '<br>'.$row['term'].' '.$row['year'].
+                        '<br>'.ucfirst($row['term']).' '.$row['year'].
                         '<br>'.$row['teamSize'].' Members';
                     echo '        </div>';
                     echo '    </div>';
@@ -100,19 +98,6 @@ if (isset($_POST['courseCode'])) {
                 }
             }
         ?>
-            <!------TODO: dynamically pull course list/info------>
-            <a class="item" href="">
-                <!--link to "course page"-->
-                <div class="content">
-                    <div class="header">
-                        TeamUp
-                    </div>
-                    <div class="description">
-                        CS3312 <br> 5 Members <br> A Team-formation Tool
-                    </div>
-                </div>
-            </a>
-            <!------------------------------------------- ------->
         </div>
     </div>
 
@@ -132,13 +117,13 @@ if (isset($_POST['courseCode'])) {
                 <label>Course Description</label>
                 <input type="text" name="courseDescription" placeholder="ex) Project Implementation">
             </div>
-            <div class="three fields">
+            <div class="two fields">
                 <div class="field">
                     <label>Term</label>
-                    <select class="ui fluid dropdown" name="Term">
-                    <option value="fall">Fall</option>
-                    <option value="spring">Spring</option>
-                    <option value="summer">Summer</option>                    
+                    <select class="ui fluid dropdown" name="term">
+                    <option value="Fall">Fall</option>
+                    <option value="Spring">Spring</option>
+                    <option value="Summer">Summer</option>                    
                 </select>
                 </div>
                 <div class="field">
@@ -148,12 +133,12 @@ if (isset($_POST['courseCode'])) {
                     <option value="2016">2016</option>
                 </select>
                 </div>
-                <div class="field">
-                    <label>Section</label>
-                    <input type="text" name="section" placeholder="ex) A">
-                </select>
-                </div>
             </div>
+                <div class="field">
+                    <label>Section (Optional)</label>
+                    <input type="text" name="section" placeholder="ex) A">
+                </div>
+            
             <div class="field">
                 <label>Team Size</label>
                 <select class="ui fluid dropdown" name="teamSize">
@@ -166,7 +151,7 @@ if (isset($_POST['courseCode'])) {
             </div>
             <div class="field">
                 <label>Course Code</label>
-                <input type="text" name="courseCode" placeholder="ex) <?php echo $rows[0].$rows[1]  ?>">
+                <input type="text" name="courseCode" id="courseCode" placeholder="ex) <?php echo $rows[0].$rows[1]  ?>">
             </div>
 
             <div class="actions">

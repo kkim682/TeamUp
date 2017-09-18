@@ -120,7 +120,7 @@ $(document).ready(function () {
                      rules: [
                         {
                             type: 'empty',
-                            prompt: 'Please enter a course code.'
+                            prompt: 'Please enter a course code you would like to use for this course.'
                         }
                     ]
                 },
