@@ -1,5 +1,68 @@
 <?php
-        $rows = $account_manager->retrieveAccountInfo($_SESSION['email']);
+    require "db/db.php";
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    $rows = $account_manager->retrieveAccountInfo($_SESSION['email']);
+    function handleCreateCourse($rows) {
+        require "db/db.php";
+        $conn = new mysqli($servername, $username, $password, $dbname);
+        if (!$conn) {
+            die('Could not connect; '.mysql_error());
+        }
+        $existence = mysqli_query($conn, "desc `".$rows[2]."_course_list`");
+        if (!$existence) {
+            $sql = "CREATE TABLE `".$rows[2]."_course_list` (".
+                "`code` varchar(12) NOT NULL,".
+                "`courseName` varchar(10) NOT NULL,".
+                "`courseDescription` varchar(255) NOT NULL,".
+                "`year` YEAR(4) NOT NULL,".
+                "`term` enum('spring', 'summer', 'fall') NOT NULL,".
+                "`section` varchar(1) NOT NULL,".
+                "`teamSize` enum('1', '2', '3', '4', '5') NOT NULL,".
+                "PRIMARY KEY (`code`),".
+                "UNIQUE KEY (`courseName`, `year`, `term`)".
+                ")ENGINE=innodb DEFAULT CHARSET=utf8;";
+            $retval = mysqli_query($conn, $sql);
+            // confirm creation
+            if (!$retval) {
+                var_dump(!$retval);
+            }
+        }
+        if ($existence) {
+            $sql = "select `courseCode` from `".$rows[2]."_course_list` where courseName='".$_POST['courseName'].
+                "' and year='".$_POST['year']."' and term='".$_POST['Term']."'";
+            $existence = mysqli_query($conn, $sql);
+            if (!$existence) {
+                $insert = "INSERT INTO `".$rows[2]."_course_list` VALUES ('".
+                    $_POST['courseCode']."','".
+                    $_POST['courseName']."','".
+                    $_POST['courseDescription']."','".
+                    $_POST['year']."','".
+                    $_POST['Term']."','".
+                    $_POST['section']."','".
+                    $_POST['teamSize']."')";
+                $result = mysqli_query($conn, $insert);
+                // confirm insertion
+                if (!$result) {
+                    // echo "Fail to create a course";
+                } else {
+                    // echo "success";
+                }
+            } else {
+                echo "duplicate course exists";
+            }
+            unset($_POST['courseCode']);
+            unset($_POST['courseName']);
+            unset($_POST['courseDescription']);
+            unset($_POST['year']);
+            unset($_POST['Term']);
+            unset($_POST['section']);
+            unset($_POST['teamSize']);
+        }
+        $conn->close();
+    }
+if (isset($_POST['courseCode'])) {
+    handleCreateCourse($rows);
+}
 ?>
     <!--Course page for professors-->
 
@@ -14,6 +77,29 @@
         </a>
         <div class="ui link items" id="sub-wrapper">
 
+        <?php
+            //$sql = "select `courseName`,`courseDescription`,".
+            //    "`year`,`term`,`section`,`teamSize` from topic";
+            $sql = 'select * from `'.$rows[2].'_course_list`';
+            $result = mysqli_query($conn, $sql);
+            $existence = mysqli_query($conn, "desc `".$rows[2]."_course_list`");
+            if ($existence) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo '<a class="item" href="">';
+                    echo '    <div class="content">';
+                    echo '        <div class="header">';
+                    echo $row['courseName'].' '.$row['section'];
+                    echo '        </div>';
+                    echo '        <div class="description">';
+                    echo $row['courseDescription'].
+                        '<br>'.$row['term'].' '.$row['year'].
+                        '<br>'.$row['teamSize'].' Members';
+                    echo '        </div>';
+                    echo '    </div>';
+                    echo '</a>'; 
+                }
+            }
+        ?>
             <!------TODO: dynamically pull course list/info------>
             <a class="item" href="">
                 <!--link to "course page"-->
@@ -26,19 +112,17 @@
                     </div>
                 </div>
             </a>
-            <!-------------------------------------------------->
+            <!------------------------------------------- ------->
         </div>
     </div>
 
 
-    <!--create a new course modal-->
-    <!--will see if there's public API for this -->
     <div class="ui mini modal" id="newCourse-modal">
         <i class="close icon"></i>
         <div class="header">
             Create a New Course
         </div>
-        <form class="ui form" id="newCourse-form">
+        <form method="POST" class="ui form" id="newCourse-form">
             <div class="ui error message"></div>
             <div class="field">
                 <label>Course Name</label>
@@ -48,7 +132,7 @@
                 <label>Course Description</label>
                 <input type="text" name="courseDescription" placeholder="ex) Project Implementation">
             </div>
-            <div class="two fields">
+            <div class="three fields">
                 <div class="field">
                     <label>Term</label>
                     <select class="ui fluid dropdown" name="Term">
@@ -62,6 +146,11 @@
                     <select class="ui fluid dropdown" name="year">
                     <option value="2017">2017</option>
                     <option value="2016">2016</option>
+                </select>
+                </div>
+                <div class="field">
+                    <label>Section</label>
+                    <input type="text" name="section" placeholder="ex) A">
                 </select>
                 </div>
             </div>
@@ -86,3 +175,5 @@
             </div>
         </form>
     </div>
+    <!--create a new course modal-->
+    <!--will see if there's public API for this -->
