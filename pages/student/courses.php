@@ -22,8 +22,8 @@
             <?php
                 $sql = "select c.course_name, c.course_section, c.course_description, c.course_year, c.course_term, c.course_code, ".
                     "u.first_name, u.last_name ".
-                    "from account as u inner join registered_student_list as r on r.user_id=u.id ".
-                    "inner join course_list as c on r.course_id=c.course_id ".
+                    "from registered_student_list as r inner join course_list as c on r.course_id=c.course_id ".
+                    "inner join account as u on c.user_id=u.id ".
                     "where r.user_id='".$rows[7]."' ".
                     "order by c.course_year asc, c.course_term asc";
                 $result = mysqli_query($conn, $sql);
@@ -37,7 +37,7 @@
                         echo '        <div class="description">';
                         echo $row['course_description'].
                             '<br>'.ucfirst($row['course_term']).' '.$row['course_year'].
-                            '<br>'.$row['first_name'].$row['last_name'];
+                            '<br>'.$row['first_name']." ".$row['last_name'];
                         echo '        </div>';
                         echo '    </div>';
                         echo '</a>'; 
@@ -48,19 +48,6 @@
                 }
             ?>
         </div>
-          
-           <!--Pull course info-->
-            <a class="item course">
-                <div class="content">
-                    <div class="header">
-                        Course Name
-                    </div>
-                    <div class="description">
-                        Course Description <br> Semester <br> Instructor
-                    </div>
-                </div>
-            </a>
-
     </div>
 
     <div class="ui mini modal" id="joinCourse-modal">
