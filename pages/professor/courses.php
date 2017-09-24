@@ -70,7 +70,7 @@ if (isset($_POST['courseCode'])) {
 
     <div class="ui container main-wrapper" id="courseList">
         <h2>My Courses</h2>
-        <a class="ui primary button" id="newCourse-bttn">
+        <a class="ui primary button" id="createCourse-bttn">
             <div class="header">
                 Create a new course
             </div>
@@ -103,12 +103,12 @@ if (isset($_POST['courseCode'])) {
         </div>
     </div>
 
-    <div class="ui mini modal" id="newCourse-modal">
+    <div class="ui mini modal" id="createCourse-modal">
         <i class="close icon"></i>
         <div class="header">
             Create a New Course
         </div>
-        <form method="POST" class="ui form" id="newCourse-form">
+        <form method="POST" class="ui form" id="createCourse-form">
             <div class="ui error message"></div>
             <div class="field">
                 <label>Course Name</label>

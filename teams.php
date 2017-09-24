@@ -13,10 +13,10 @@
 ?>
 
 <!--Note: This page is rough-->
-<div class="ui container" id="main-wrapper">
+<div class="ui container main-wrapper">
     <h2>My Teams</h2>
     <!--TODO: dynamically pull teams list/info-->
-    <div class="ui link items" id="sub-wrapper">
+    <div class="ui link items sub-wrapper">
 
         <a class="item" href="">
             <!--link to "course page"-->
@@ -26,7 +26,6 @@
                 </div>
                 <div class="description">
                     Course Name <br> # Members <br> Project Description
-
                 </div>
             </div>
         </a>

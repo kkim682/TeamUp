@@ -6,11 +6,11 @@ $(document).ready(function () {
 
     $('.team').click(function () {
         $('#infoSidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');
-    });    
+    });
 
     $('.ui.modal')
         .modal({
-            allowMultiple: false   
+            allowMultiple: false
         });
 
 
@@ -18,7 +18,7 @@ $(document).ready(function () {
         $('#login-modal')
             .modal({
                 inverted: false,
-                onHidden: function(){
+                onHidden: function () {
                     $('#login-form').find('input[type=password],input[type=text]').val('');
                 }
             })
@@ -29,38 +29,51 @@ $(document).ready(function () {
         $('#signUp-modal')
             .modal({
                 inverted: false,
-                onHidden: function(){
+                onHidden: function () {
                     $('#signUp-form').find('input[type=password],input[type=text]').val('');
                     $('#signUp-form').find('input[type=checkbox]').prop('checked', false);
-                }            
-        })
-            .modal('show');
-    });
-
-    $('#newCourse-bttn').click(function () {
-        $('#newCourse-modal')
-            .modal({
-                inverted: false,
-                onHidden: function(){
-                    $('#newCourse-form').find('input[type=text]').val('');
                 }
             })
             .modal('show');
     });
-    
+
     $('.cancel').click(function () {
         $('.ui.modal')
             .modal('hide');
     });
-    
-$("#courseCode").on("keydown", function (e) { return e.which !== 32; });
-
-$('.top.menu .item').tab();
 
 
-//Course
-    
-    $(".course").click(function(){
+    $('.top.menu .item').tab();
+
+
+    //Course
+    $('#createCourse-bttn').click(function () {
+        $('#createCourse-modal')
+            .modal({
+                inverted: false,
+                onHidden: function () {
+                    $('#createCourse-form').find('input[type=text]').val('');
+                }
+            })
+            .modal('show');
+    });
+
+    $('#joinCourse-bttn').click(function () {
+        $('#joinCourse-modal')
+            .modal({
+                inverted: false,
+                onHidden: function () {
+                    $('#joinCourse-form').find('input[type=text]').val('');
+                }
+            })
+            .modal('show');
+    });
+
+    $("#courseCode").on("keydown", function (e) {
+        return e.which !== 32;
+    });
+
+    $(".course").click(function () {
         $("#courseList").hide();
         $("#coursePage").show();
     })
