@@ -16,7 +16,7 @@ $GLOBALS['account_manager'] = new AccountManager;
                 } else {
                     $_SESSION['email'] = $_POST['loginEmail'];
                     $_SESSION['account_manager'] = $GLOBALS['account_manager'];
-                    header('Location:teams.php'); 
+                    header('Location:courses.php'); 
                     return;
                 } 
             }
@@ -40,7 +40,7 @@ $GLOBALS['account_manager'] = new AccountManager;
     }
 
 if (isset($_SESSION['email'])) {
-    header('Location:teams.php');
+    header('Location:courses.php');
 }
 
 handleRegister($nameArr, $dayArr, $timeArr);

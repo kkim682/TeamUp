@@ -1,4 +1,3 @@
-<!-- Professors only-->
 <?php 
     require "db/accountManagement.php";
     require "include/session.php";

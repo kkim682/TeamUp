@@ -66,7 +66,7 @@ save($nameArr, $dayArr, $timeArr);
             </div>
             <div class="field">
                 <label>I am a...</label>
-                <select class="ui fluid dropdown" name="usertype">
+                <select class="ui fluid disabled dropdown" name="usertype">
                 <option value="student" <?php if ($rows[5] == "student") { echo "selected='selected'"; }?>>Student</option>
                 <option value="professor" <?php if ($rows[5] == "professor") { echo "selected='selected'"; }?>>Professor</option>  
                 </select>

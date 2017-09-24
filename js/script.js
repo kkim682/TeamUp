@@ -1,9 +1,12 @@
 $(document).ready(function () {
 
     $('#menu').click(function () {
-        $('.ui.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');
+        $('#sideMenu').sidebar('setting', 'transition', 'overlay').sidebar('toggle');
     });
 
+    $('.team').click(function () {
+        $('#infoSidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');
+    });    
 
     $('.ui.modal')
         .modal({
@@ -52,4 +55,6 @@ $(document).ready(function () {
     
 $("#courseCode").on("keydown", function (e) { return e.which !== 32; });
 
+$('.top.menu .item').tab();
+    
 });
