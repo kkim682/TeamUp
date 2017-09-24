@@ -73,11 +73,11 @@
 
 /*Wrapper*/
 
-#main-wrapper {
+.main-wrapper {
     padding: 2rem 9rem 2rem 9rem;
 }
 
-#sub-wrapper {
+.sub-wrapper {
     padding: 2rem 0 2rem 0;
 }
 

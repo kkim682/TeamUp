@@ -56,5 +56,14 @@ $(document).ready(function () {
 $("#courseCode").on("keydown", function (e) { return e.which !== 32; });
 
 $('.top.menu .item').tab();
+
+
+//Course
     
+    $(".course").click(function(){
+        $("#courseList").hide();
+        $("#coursePage").show();
+    })
+
+
 });
