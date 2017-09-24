@@ -129,4 +129,40 @@ class AccountManager {
         $conn->close();
     }
 
+    function handleJoinCourse($courseId, $userId, $year, $term) {
+        require "db/db.php";
+        $conn = new mysqli($servername, $username, $password, $dbname);
+        if (!$conn) {
+            die('Could not connect; '.mysql_error());
+        }
+        $sql = "select `register_id` from `registered_student_list` where course_id='".$courseId."' and user_id='".$userId.
+            "' and year='".$year."' and course_term='".$term."'";
+        $existence = mysqli_query($conn, $sql);
+        if (!$existence) {
+            $insert = "INSERT INTO `registered_student_list` (course_id, user_id, year, term) VALUES ('".$courseId."','".$userId."','".$year."','".$term."')";
+            $result = mysqli_query($conn, $insert);
+            if (!$result) {
+                return false;
+            }
+        } else {
+            echo "already registered";
+        }
+        $conn->close();
+    
+    }
+    function retrieveCourseInfoByCode($courseCode) {
+		require('db.php');
+		$conn = new mysqli($servername, $username, $password, $dbname);
+	    if (!$conn) {
+	        die('Could not connect: ' . mysql_error());
+	    }
+	    $result = $conn->query("SELECT * FROM course_list WHERE course_code = '$courseCode';");
+	    if (!$result) {
+            return false;
+        }
+	    return mysqli_fetch_array($result);
+	    $result->close();
+	    $conn->close();
+	}
+
 }?>
