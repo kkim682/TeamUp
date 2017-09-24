@@ -74,8 +74,8 @@ $(document).ready(function () {
     });
 
     $(".course").click(function () {
-        $("#courseList").hide();
-        $("#coursePage").show();
+        //$("#courseList").hide();
+        //$("#coursePage").show();
     })
 
 
