@@ -4,7 +4,6 @@
     $rows = $account_manager->retrieveAccountInfo($_SESSION['email']);
     if (isset($_POST['courseCode'])) {
         $courseInfo = $account_manager->retrieveCourseInfoByCode($_POST['courseCode']);
-        echo $courseInfo[0].$rows[7].$courseInfo[3].$courseInfo[4];
         $account_manager->handleJoinCourse($courseInfo[0], $rows[7], $courseInfo[3], $courseInfo[4]);
         unset($_POST['courseCode']);
     }
@@ -19,6 +18,36 @@
             </div>
         </a>
         <div class="ui link items" id="sub-wrapper">
+
+            <?php
+                $sql = "select c.course_name, c.course_section, c.course_description, c.course_year, c.course_term, c.course_code, ".
+                    "u.first_name, u.last_name ".
+                    "from account as u inner join registered_student_list as r on r.user_id=u.id ".
+                    "inner join course_list as c on r.course_id=c.course_id ".
+                    "where r.user_id='".$rows[7]."' ".
+                    "order by c.course_year asc, c.course_term asc";
+                $result = mysqli_query($conn, $sql);
+                if ($result) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo '<a class="item course" href="?code='.$row['course_code'].'">'; //link to course page
+                        echo '    <div class="content">';
+                        echo '        <div class="header">';
+                        echo $row['course_name'].' '.$row['course_section'];
+                        echo '        </div>';
+                        echo '        <div class="description">';
+                        echo $row['course_description'].
+                            '<br>'.ucfirst($row['course_term']).' '.$row['course_year'].
+                            '<br>'.$row['first_name'].$row['last_name'];
+                        echo '        </div>';
+                        echo '    </div>';
+                        echo '</a>'; 
+                    }
+                } else {
+                    echo 'no course';
+                    echo $rows[7];
+                }
+            ?>
+        </div>
           
            <!--Pull course info-->
             <a class="item course">
@@ -32,7 +61,6 @@
                 </div>
             </a>
 
-        </div>
     </div>
 
     <div class="ui mini modal" id="joinCourse-modal">

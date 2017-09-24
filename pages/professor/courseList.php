@@ -8,7 +8,7 @@
     <div class="ui link items" id="sub-wrapper">
 
         <?php
-            $sql = "select * from `course_list` where user_id='".$rows[7]."' order by course_year desc, course_term desc, course_section desc";
+            $sql = "select * from `course_list` where user_id='".$rows[7]."' order by course_year asc, course_term asc, course_section asc";
             $result = mysqli_query($conn, $sql);
             if ($result) {
                 while ($row = mysqli_fetch_assoc($result)) {
