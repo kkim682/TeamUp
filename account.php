@@ -31,10 +31,10 @@ save($nameArr, $dayArr, $timeArr);
     include "site/header.php";
     include "site/sidebar.php";
 ?>
-<div class="ui container" id="main-wrapper">
+<div class="ui container main-wrapper">
     <h2>My Account</h2>
     <p>Please update your profile and click "Save" when you are finished.</p>
-    <form method="POST" class="ui form" id="sub-wrapper">
+    <form method="POST" class="ui form sub-wrapper">
        <div class="ui error message"></div>
         <div class="field">
             <label>Name</label>
