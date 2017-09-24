@@ -9,6 +9,11 @@
     border: none;
 }
 
+
+.ui.modal {
+    padding-bottom:1rem;
+}
+
 .topbar {
     font-size: 2rem!important;
 }
@@ -40,9 +45,8 @@
 
 .form {
     padding-top: 1rem;
-    padding-left:3rem;
-    padding-right:3rem;
-    padding-bottom:3rem;
+    padding-left:2rem;
+    padding-right:2rem;
 }
 
 .hero {

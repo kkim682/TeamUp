@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    $('.ui.dropdown')
+        .dropdown();
 
     $('#menu').click(function () {
         $('#sideMenu').sidebar('setting', 'transition', 'overlay').sidebar('toggle');
@@ -77,6 +79,22 @@ $(document).ready(function () {
         //$("#courseList").hide();
         //$("#coursePage").show();
     })
+
+    $('#editCourse-bttn').click(function () {
+        $('#editCourse-modal')
+            .modal({
+                inverted: false
+            })
+            .modal('show');
+    });
+
+    $('#deleteCourse-bttn').click(function () {
+        $('#deleteCourse-modal')
+            .modal({
+                inverted: false
+            })
+            .modal('show');
+    });
 
 
 });

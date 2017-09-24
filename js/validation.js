@@ -98,17 +98,17 @@ $(document).ready(function () {
                 },
                 courseName: {
                     identifier: 'courseName',
-                     rules: [
+                    rules: [
                         {
                             type: 'empty',
                             prompt: 'Please enter course name.'
                         }
                     ]
                 },
-                
+
                 courseDescription: {
                     identifier: 'courseDescription',
-                     rules: [
+                    rules: [
                         {
                             type: 'empty',
                             prompt: 'Please enter course description.'
@@ -117,12 +117,16 @@ $(document).ready(function () {
                 },
                 courseCode: {
                     identifier: 'courseCode',
-                     rules: [
+                    rules: [
                         {
                             type: 'empty',
                             prompt: 'Please enter a course code you would like to use for this course.'
+                        },
+                        {
+                            type: 'minLength[6]',
+                            prompt: 'Your course code must be at least {ruleValue} characters'
                         }
-                    ]
+                    ]       
                 },
             }
         });
