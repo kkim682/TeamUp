@@ -1,17 +1,21 @@
-<div class="pusher">
-    <!--course page-->
-    <?php
+<?php
         $sql = "select * from `course_list` where course_code='".$_GET["code"]."' order by course_year desc, course_term desc, course_section desc";
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
     ?>
+    <div class="pusher">
+        <!--course page-->
         <div class="ui container main-wrapper" id="coursePage">
             <h2>
-                <?php echo $row['course_name']?>
+                <?php echo $row['course_name'].": ".$row['course_description']?>
+                <div class="ui icon top left pointing dropdown button">
+                    <i class="wrench icon"></i>
+                    <div class="menu">
+                        <div class="item" id="editCourse-bttn">Edit</div>
+                        <div class="item" id="deleteCourse-bttn">Delete</div>
+                    </div>
+                </div>
             </h2>
-            <p>
-                <?php echo $row['course_description']." / ".$row['course_term']." ".$row['course_year']?>
-            </p>
             <div class="ui top attached tabular menu" id="list-selection">
                 <a class="item active" data-tab="teams">Teams (2)</a>
                 <a class="item" data-tab="students">Students (123)</a>
@@ -56,13 +60,89 @@
                 </div>
             </div>
         </div>
-</div>
-
-<!--sidebar-->
-<div class="ui sidebar very wide right vertical menu" id=infoSidebar>
-    <div class="item" style="text-align:center;">
-        <h3>
-            TeamUp
-        </h3>
     </div>
-</div>
+
+    <!--sidebar-->
+    <div class="ui sidebar very wide right vertical menu" id=infoSidebar>
+        <div class="item" style="text-align:center;">
+            <h3>
+                TeamUp
+            </h3>
+        </div>
+    </div>
+
+    <!--TODO edit course information-->
+    <!--edit course information modal-->
+    <div class="ui mini modal" id="editCourse-modal">
+        <i class="close icon"></i>
+        <div class="header">
+            Edit course information
+        </div>
+        <form method="POST" class="ui form" id="editCourse-form">
+            <div class="ui info message">
+                <p>Your course code is: <b><?php echo $row['course_code']?></b>
+                </p>
+            </div>
+            <div class="ui error message"></div>
+            <div class="field">
+                <label>Course Name</label>
+                <input type="text" name="courseName" value="<?php echo $row['course_name']?>">
+            </div>
+            <div class="field">
+                <label>Course Description</label>
+                <input type="text" name="courseDescription" value="<?php echo $row['course_description']?>">
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>Term</label>
+                    <select class="ui fluid dropdown" name="term">
+                    <option value="Fall">Fall</option>
+                    <option value="Spring">Spring</option>
+                    <option value="Summer">Summer</option>                    
+                </select>
+                </div>
+                <div class="field">
+                    <label>Year</label>
+                    <select class="ui fluid dropdown" name="year">
+                    <option value="2017">2017</option>
+                    <option value="2016">2016</option>
+                </select>
+                </div>
+            </div>
+            <div class="field">
+                <label>Section (Optional)</label>
+                <input type="text" name="section" value="<?php echo $row['course_section']?>">
+            </div>
+
+            <div class="field">
+                <label>Team Size</label>
+                <select class="ui fluid dropdown" name="teamSize">
+                    <?php 
+                        for ($i=2; $i<6; $i++) {
+                            echo "<option value='".$i."'>".$i." people</option>";
+                        }
+                    ?>
+                </select>
+            </div>
+
+            <div class="actions">
+                <input class="ui right floated primary button" type="submit" value="OK">
+                <input class="ui right floated cancel button" type="reset" value="Cancel">
+            </div>
+        </form>
+    </div>
+
+
+    <!--delete confirmation-->
+    <div class="ui tiny modal" id="deleteCourse-modal">
+        <div class="ui header">
+            Delete a Course
+        </div>
+        <div class="content">
+            <p>Are you sure you want to delete <b><?php echo $row['course_name'].': '.$row['course_description'];?></b>?</p>
+        </div>
+        <div class="actions">
+            <input class="ui right floated primary button" type="submit" value="OK">
+            <input class="ui right floated cancel button" type="button" value="Cancel">
+        </div>
+    </div>
