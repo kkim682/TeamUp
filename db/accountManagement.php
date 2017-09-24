@@ -64,7 +64,7 @@ class AccountManager {
 	        die('Could not connect: ' . mysql_error());
 	    }
 	    $email = $conn->real_escape_string($email);
-	    $result = $conn->query("SELECT first_name, last_name, email, password, school, user, days FROM account WHERE email = '$email';");
+	    $result = $conn->query("SELECT first_name, last_name, email, password, school, user, days, id FROM account WHERE email = '$email';");
 	    while ($row = mysqli_fetch_array($result, MYSQLI_NUM)) {
 	        for ($i = 0; $i < sizeof($row); $i++) {
 	            $rows[] = $row[$i];
@@ -94,5 +94,39 @@ class AccountManager {
         return True;
         $conn->close();
 	}
+    
+    function handleCreateCourse($user, $code, $name, $description, $year, $term, $section, $teamSize) {
+        require "db/db.php";
+        $conn = new mysqli($servername, $username, $password, $dbname);
+        if (!$conn) {
+            die('Could not connect; '.mysql_error());
+        }
+        $sql = "select `course_id` from `course_list` where user_id='".$user.
+            ".course_name='".$name.
+            "' and course_year='".$year."' and course_term='".$term.
+            "' and course_section".$section."'";
+        $existence = mysqli_query($conn, $sql);
+        if (!$existence) {
+            $insert = "INSERT INTO `course_list` (`user_id`, `course_name`, `course_year`, `course_term`, `course_section`, `team_size`, `course_description`, `course_code`) VALUES ('".
+                $user."','".
+                strtoupper($name)."','".
+                $year."','".
+                $term."','".
+                strtoupper($section)."','"
+                .$teamSize."','".
+                ucwords($description)."','".
+                strtoupper($code)."')";
+            $result = mysqli_query($conn, $insert);
+            // confirm insertion
+            if (!$result) {
+                // echo "Fail to create a course";
+            } else {
+                // echo "success";
+            }
+        } else {
+            echo "duplicate course exists";
+        }
+        $conn->close();
+    }
 
 }?>

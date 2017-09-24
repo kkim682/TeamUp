@@ -2,67 +2,17 @@
     require "db/db.php";
     $conn = new mysqli($servername, $username, $password, $dbname);
     $rows = $account_manager->retrieveAccountInfo($_SESSION['email']);
-    function handleCreateCourse($rows) {
-        require "db/db.php";
-        $conn = new mysqli($servername, $username, $password, $dbname);
-        if (!$conn) {
-            die('Could not connect; '.mysql_error());
-        }
-        $existence = mysqli_query($conn, "desc `".$rows[2]."_course_list`");
-        if (!$existence) {
-            $sql = "CREATE TABLE `".$rows[2]."_course_list` (".
-                "`code` varchar(12) NOT NULL,".
-                "`courseName` varchar(10) NOT NULL,".
-                "`courseDescription` varchar(255) NOT NULL,".
-                "`year` YEAR(4) NOT NULL,".
-                "`term` enum('Spring', 'Summer', 'Fall') NOT NULL,".
-                "`section` varchar(1) NOT NULL,".
-                "`teamSize` enum('1', '2', '3', '4', '5') NOT NULL,".
-                "PRIMARY KEY (`code`),".
-                "UNIQUE KEY (`courseName`, `year`, `term`)".
-                ")ENGINE=innodb DEFAULT CHARSET=utf8;";
-            $retval = mysqli_query($conn, $sql);
-            // confirm creation
-            if (!$retval) {
-                var_dump(!$retval);
-            }
-        }
-        if ($existence) {
-            $sql = "select `courseCode` from `".$rows[2]."_course_list` where courseName='".$_POST['courseName'].
-                "' and year='".$_POST['year']."' and term='".$_POST['term']."'";
-            $existence = mysqli_query($conn, $sql);
-            if (!$existence) {
-                $insert = "INSERT INTO `".$rows[2]."_course_list` VALUES ('".
-                    strtoupper($_POST['courseCode'])."','".
-                    strtoupper($_POST['courseName'])."','".
-                    ucwords($_POST['courseDescription'])."','".
-                    $_POST['year']."','".
-                    $_POST['term']."','".
-                    strtoupper($_POST['section'])."','".
-                    $_POST['teamSize']."')";
-                $result = mysqli_query($conn, $insert);
-                // confirm insertion
-                if (!$result) {
-                    // echo "Fail to create a course";
-                } else {
-                    // echo "success";
-                }
-            } else {
-                echo "duplicate course exists";
-            }
-            unset($_POST['courseCode']);
-            unset($_POST['courseName']);
-            unset($_POST['courseDescription']);
-            unset($_POST['year']);
-            unset($_POST['term']);
-            unset($_POST['section']);
-            unset($_POST['teamSize']);
-        }
-        $conn->close();
+    if (isset($_POST['courseCode'])) {
+        $account_manager->handleCreateCourse($rows[7], $_POST['courseCode'], $_POST['courseName'], $_POST['courseDescription'], $_POST['year'], $_POST['term'], $_POST['section'], $_POST['teamSize']);
+
+        unset($_POST['courseCode']);
+        unset($_POST['courseName']);
+        unset($_POST['courseDescription']);
+        unset($_POST['year']);
+        unset($_POST['term']);
+        unset($_POST['section']);
+        unset($_POST['teamSize']);
     }
-if (isset($_POST['courseCode'])) {
-    handleCreateCourse($rows);
-}
 ?>
     <!--Course page for professors-->
 
@@ -76,26 +26,25 @@ if (isset($_POST['courseCode'])) {
         <div class="ui link items" id="sub-wrapper">
 
         <?php
-            //$sql = "select `courseName`,`courseDescription`,".
-            //    "`year`,`term`,`section`,`teamSize` from topic";
-            $sql = 'select * from `'.$rows[2].'_course_list`';
+            $sql = "select * from `course_list` where user_id='".$rows[7]."' order by course_year desc, course_term desc, course_section desc";
             $result = mysqli_query($conn, $sql);
-            $existence = mysqli_query($conn, "desc `".$rows[2]."_course_list`");
-            if ($existence) {
+            if ($result) {
                 while ($row = mysqli_fetch_assoc($result)) {
                     echo '<a class="item" href="">'; //link to course page
                     echo '    <div class="content">';
                     echo '        <div class="header">';
-                    echo $row['courseName'].' '.$row['section'];
+                    echo $row['course_name'].' '.$row['course_section'];
                     echo '        </div>';
                     echo '        <div class="description">';
-                    echo $row['courseDescription'].
-                        '<br>'.ucfirst($row['term']).' '.$row['year'].
-                        '<br>'.$row['teamSize'].' Members';
+                    echo $row['course_description'].
+                        '<br>'.ucfirst($row['course_term']).' '.$row['course_year'].
+                        '<br>'.$row['team_size'].' Members';
                     echo '        </div>';
                     echo '    </div>';
                     echo '</a>'; 
                 }
+            } else {
+                echo 'no course';
             }
         ?>
         </div>
