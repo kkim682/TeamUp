@@ -12,7 +12,7 @@
             $result = mysqli_query($conn, $sql);
             if ($result) {
                 while ($row = mysqli_fetch_assoc($result)) {
-                    echo '<a class="item course" href="?code='.$row['course_code'].'">'; //link to course page
+                    echo '<a class="item course" href="?course_id='.$row['course_id'].'">'; //link to course page
                     echo '    <div class="content">';
                     echo '        <div class="header">';
                     echo $row['course_name'].' '.$row['course_section'];

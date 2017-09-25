@@ -150,6 +150,7 @@ class AccountManager {
         $conn->close();
     
     }
+    
     function retrieveCourseInfoByCode($courseCode) {
 		require('db.php');
 		$conn = new mysqli($servername, $username, $password, $dbname);
@@ -164,5 +165,21 @@ class AccountManager {
 	    $result->close();
 	    $conn->close();
 	}
-
+    
+    function getNumRows($table, $colm, $value) {
+		require('db.php');
+		$conn = new mysqli($servername, $username, $password, $dbname);
+	    if (!$conn) {
+	        die('Could not connect: ' . mysql_error());
+	    }
+	    $sql = "SELECT count(*) FROM ".$table." where ".$colm."='".$value."'";
+        $result = $conn->query($sql);
+	    if (!$result) {
+            return false;
+        }
+        $row = mysqli_fetch_array($result);
+        return $row['count(*)'];
+	    $result->close();
+	    $conn->close();
+	}
 }?>

@@ -1,8 +1,10 @@
 <?php
-        $sql = "select * from `course_list` where course_code='".$_GET["code"]."' order by course_year desc, course_term desc, course_section desc";
+        $sql = "select * from `course_list` where course_id='".$_GET['course_id']."' order by course_year desc, course_term desc, course_section desc";
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
-    ?>
+        $numStudents = $account_manager->getNumRows("registered_student_list", "course_id", $_GET['course_id']);
+        //$numTeams = $account_manager->getNumRows("registered_student_list", "course_id", "'".$_GET['code']."'");
+?>
     <div class="pusher">
         <!--course page-->
         <div class="ui container main-wrapper" id="coursePage">
@@ -18,7 +20,7 @@
             </h2>
             <div class="ui top attached tabular menu" id="list-selection">
                 <a class="item active" data-tab="teams">Teams (2)</a>
-                <a class="item" data-tab="students">Students (123)</a>
+                <a class="item" data-tab="students">Students (<?php if($numStudents) {echo $numStudents;} else {echo '0';} ?>)</a>
             </div>
             <!--Teams tab-->
             <div class="ui bottom attached tab segment active" data-tab="teams">
@@ -50,13 +52,25 @@
             <!--Student tab-->
             <div class="ui bottom attached tab segment" data-tab="students">
                 <div class="ui link items" id="sub-wrapper">
-                    <a class="item">
-                        <div class="content">
-                            <div class="header">
-                                Ah Jin Noh
-                            </div>
-                        </div>
-                    </a>
+                    <?php
+                        $sql = "select u.first_name, u.last_name, u.email ".
+                            "from account as u inner join registered_student_list as r ".
+                            "on r.user_id=u.id where r.course_id='".$_GET['course_id']."'";
+                        $result = mysqli_query($conn, $sql);
+                        if ($result) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo '<a class="item">';
+                                echo '  <div class="content">';
+                                echo '      <div class="header">';
+                                echo $row['first_name']." ".$row['last_name'];
+                                echo '      </div>';
+                                echo '  </div>';
+                                echo '</a>';
+                            }
+                        } else {
+                                echo '<div class="header"> no student </div>';
+                        }
+                    ?>
                 </div>
             </div>
         </div>

@@ -15,7 +15,7 @@
 ?>
     
 <?php
-    if (isset($_GET['code'])) {
+    if (isset($_GET['course_id'])) {
         include "coursePage.php";
     } else {
         include "courseList.php";
