@@ -1,9 +1,8 @@
 <?php
-        $sql = "select * from `course_list` where course_id='".$_GET['course_id']."' order by course_year desc, course_term desc, course_section desc";
+        $sql = "select * from `course_list` where course_code='".$_GET['course_id']."' order by course_year desc, course_term desc, course_section desc"; //change this to course_id=
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
-        $numStudents = $account_manager->getNumRows("registered_student_list", "course_id", $_GET['course_id']);
-        //$numTeams = $account_manager->getNumRows("registered_student_list", "course_id", "'".$_GET['code']."'");
+        $numStudents = $account_manager->getNumRows("registered_student_list", "course_code", $_GET['course_id']);
 ?>
     <div class="pusher">
         <!--course page-->
@@ -13,7 +12,7 @@
                 <div class="ui icon top left pointing dropdown button">
                     <i class="wrench icon"></i>
                     <div class="menu">
-                        <div class="item" id="infoCourse-bttn">Edit</div>
+                        <div class="item" id="infoCourse-bttn">Course Information</div>
                         <div class="item" id="deleteCourse-bttn">Delete</div>
                     </div>
                 </div>
@@ -55,7 +54,7 @@
                     <?php
                         $sql = "select u.first_name, u.last_name, u.email ".
                             "from account as u inner join registered_student_list as r ".
-                            "on r.user_id=u.id where r.course_id='".$_GET['course_id']."'";
+                            "on r.user_id=u.id where r.course_code='".$_GET['course_id']."'";
                         $result = mysqli_query($conn, $sql);
                         if ($result) {
                             while ($row = mysqli_fetch_assoc($result)) {
@@ -85,17 +84,22 @@
         </div>
     </div>
 
-    <!--TODO edit course information-->
-    <!--edit course information modal-->
-    <?php
-        $sql = "select * from `course_list` where course_id='".$_GET['course_id']."' order by course_year desc, course_term desc, course_section desc";
-        $result = mysqli_query($conn, $sql);
-        $row = mysqli_fetch_assoc($result);
+
+    <!--view course information modal-->
+    <?php                 
+    $sql = "select c.course_name, c.course_section, c.course_description, c.course_year, c.course_term, c.course_code, ".
+            "u.first_name, u.last_name ".
+            "from registered_student_list as r inner join course_list as c on r.course_id=c.course_id ".
+            "inner join account as u on c.user_id=u.id ".
+            "where r.user_id='".$rows[7]."' ".
+            "order by c.course_year asc, c.course_term asc";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
 ?>
     <div class="ui mini modal" id="infoCourse-modal">
         <i class="close icon"></i>
         <div class="header">
-            Edit course information
+            Course information
         </div>
         <form method="POST" class="ui form" id="infoCourse-form">
             <div class="ui info message">
@@ -105,48 +109,29 @@
             <div class="ui error message"></div>
             <div class="field">
                 <label>Course Name</label>
-                <input type="text" name="courseName" value="<?php echo $row['course_name']?>">
+                <p>
+                    <?php echo $row['course_name'].' '.$row['course_section']?>
+                </p>
             </div>
             <div class="field">
                 <label>Course Description</label>
-                <input type="text" name="courseDescription" value="<?php echo $row['course_description']?>">
-            </div>
-            <div class="two fields">
-                <div class="field">
-                    <label>Term</label>
-                    <select class="ui fluid dropdown" name="term">
-                    <option value="Fall">Fall</option>
-                    <option value="Spring">Spring</option>
-                    <option value="Summer">Summer</option>                    
-                </select>
-                </div>
-                <div class="field">
-                    <label>Year</label>
-                    <select class="ui fluid dropdown" name="year">
-                    <option value="2017">2017</option>
-                    <option value="2016">2016</option>
-                </select>
-                </div>
+                <p>
+                    <?php echo $row['course_description']?>
+                </p>
             </div>
             <div class="field">
-                <label>Section (Optional)</label>
-                <input type="text" name="section" value="<?php echo $row['course_section']?>">
+                <label>Term</label>
+                <?php echo $row['course_term'].' '.$row['course_year']?>
             </div>
-
             <div class="field">
-                <label>Team Size</label>
-                <select class="ui fluid dropdown" name="teamSize">
-                    <?php 
-                        for ($i=2; $i<6; $i++) {
-                            echo "<option value='".$i."'>".$i." people</option>";
-                        }
-                    ?>
-                </select>
+                <label>Instructor</label>
+                <p>
+                    <?php echo $row['first_name'].' '.$row['last_name'] ?>
+                </p>
             </div>
 
             <div class="actions">
-                <input class="ui right floated primary button" type="submit" value="OK">
-                <input class="ui right floated cancel button" type="reset" value="Cancel">
+                <input class="ui right floated button" type="submit" value="Close">
             </div>
         </form>
     </div>
@@ -155,13 +140,13 @@
     <!--delete confirmation-->
     <div class="ui tiny modal" id="deleteCourse-modal">
         <div class="ui header">
-            Delete a Course
+            Drop a Course
         </div>
         <div class="content">
-            <p>Are you sure you want to delete <b><?php echo $row['course_name'].': '.$row['course_description'];?></b>?</p>
+            <p>Are you sure you want to drop <b><?php echo $row['course_name'].': '.$row['course_description'];?></b>?</p>
         </div>
         <div class="actions">
-            <input class="ui right floated negative button" type="submit" value="Delete">
+            <input class="ui right floated negative button" type="submit" value="Drop">
             <input class="ui right floated cancel button" type="button" value="Cancel">
         </div>
     </div>

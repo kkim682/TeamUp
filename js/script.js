@@ -80,8 +80,8 @@ $(document).ready(function () {
         //$("#coursePage").show();
     })
 
-    $('#editCourse-bttn').click(function () {
-        $('#editCourse-modal')
+    $('#infoCourse-bttn').click(function () {
+        $('#infoCourse-modal')
             .modal({
                 inverted: false
             })
