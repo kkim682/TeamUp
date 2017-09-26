@@ -34,6 +34,39 @@
             <input type="text" name="courseCode" id="courseCode">
         </div>
 
+        <div id="myDiv"></div>
+
+        <script>
+        $("#joinCourse-form").on('submit', function(event){
+            var div = document.getElementById('myDiv');
+            div.innerHTML = "";
+            var courseCode = $('#courseCode').val();
+            var result = "";
+            function ajaxCall() {
+                var temp = "";
+                $.ajax({
+                    url:'../include/student_course.php',
+                    type:'POST',
+                    async: false,
+                    data: {courseCode:courseCode},
+                    success: function(response){
+                        temp = response;
+                    },
+                    error: function(response){
+                        alert("no connection to DB");
+                    }
+                })
+                return temp;
+            }
+            result = ajaxCall();
+            if (result === "") {
+                div.innerHTML = "<div class='ui negative message'>Invalid Course Code</div>";
+                return false;
+            }
+        })
+
+        </script>
+
         <div class="actions">
             <input class="ui right floated primary button" type="submit" value="OK">
             <input class="ui right floated cancel button" type="button" value="Cancel">
