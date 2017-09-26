@@ -13,7 +13,7 @@
                     <i class="wrench icon"></i>
                     <div class="menu">
                         <div class="item" id="infoCourse-bttn">Course Information</div>
-                        <div class="item" id="deleteCourse-bttn">Delete</div>
+                        <div class="item" id="deleteCourse-bttn">Drop</div>
                     </div>
                 </div>
             </h2>
