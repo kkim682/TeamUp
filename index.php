@@ -48,6 +48,8 @@ $error_msg = handleLogin();
 
 include "site/header.php";
 ?>
+
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
 <div class="ui container">
     <div class="ui borderless huge menu">
         <a class="header item topbar" id="logo" href="index.php"><img src="img/logo.png" alt="Logo" style="height:40px; width: auto"></a>
@@ -87,18 +89,54 @@ include "site/header.php";
         <div class="ui error message"></div>
         <div class="field">
             <label>Email</label>
-            <input type="text" name="loginEmail" placeholder="Email">
+            <input id="loginEmail" type="text" name="loginEmail" placeholder="Email">
         </div>
         <div class="field">
             <label>Password</label>
-            <input type="password" name="loginPassword" placeholder="Password">
-        </div><?php if (isset($error_msg)) {
-            echo "<div class='ui negative message'>".$error_msg."</div>";
-        }?><div class="actions">
+            <input id="loginPassword" type="password" name="loginPassword" placeholder="Password">
+        </div>
+        <div id="myDiv"></div>
+        <div class="actions">
             <input class="ui right floated primary button" type="submit" id="login" value="OK">
             <input class="ui right floated cancel button" type="button" value="Cancel">
         </div>
-
+    <script>
+        $("#login-form").on('submit', function(event){
+            /*
+             * do ajax logic  -> $.post is a shortcut for the basic $.ajax function which would automatically set the method used to being post
+             * $.get(), $.load(), $.post() are all variations of the basic $.ajax function with parameters predefined like 'method' used in the ajax call (get or post)
+             * i mostly use the $.ajax function so i'm not to sure extending the $.post example with an addition .error() (as Kristof Claes mentions) function is allowed
+             */
+            var div = document.getElementById('myDiv');
+            div.innerHTML = "";
+            var loginEmail = $('#loginEmail').val()
+            var loginPassword = $('#loginPassword').val()
+            var result = "";
+            function ajaxCall() {
+                var temp = "";
+                $.ajax({
+                    url:'include/ajax.php',
+                    type:'POST',
+                    async: false,
+                    data: {loginEmail:loginEmail, loginPassword:loginPassword},
+                    success: function(response){
+                        temp = response;
+                    },
+                    error: function(response){
+                        //as far as i know, this function will only get triggered if there are some request errors (f.e: 404) or if the response is not in the expected format provided by the dataType parameter
+                        alert("no connection to DB");
+                    }
+                })
+                return temp;
+            }
+            result = ajaxCall();
+            if (result == "invalid") {
+                var div = document.getElementById('myDiv');
+                div.innerHTML = "<div class='ui negative message'>Invalid email or password</div>";
+                return false;
+            }
+        })
+    </script>
     </form>
 </div>
 
