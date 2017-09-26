@@ -182,4 +182,29 @@ class AccountManager {
 	    $result->close();
 	    $conn->close();
 	}
+
+    function getStudentList($courseId) {
+		require('db.php');
+		$conn = new mysqli($servername, $username, $password, $dbname);
+	    if (!$conn) {
+	        die('Could not connect: ' . mysql_error());
+	    }
+        $sql = "select u.first_name, u.last_name ".
+            "from account as u inner join registered_student_list as r ".
+            "on r.user_id=u.id where r.course_id='".$courseId."'";
+        $result = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo '<a class="item">';
+                echo '  <div class="content">';
+                echo '      <div class="header">';
+                echo $row['first_name']." ".$row['last_name'];
+                echo '      </div>';
+                echo '  </div>';
+                echo '</a>';
+            }
+        } else {
+                echo '<div class="header"> There are no students in this course. </div>';
+        }
+    }
 }?>

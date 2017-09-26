@@ -10,7 +10,7 @@
         <?php
             $sql = "select * from `course_list` where user_id='".$rows[7]."' order by course_year asc, course_term asc, course_section asc";
             $result = mysqli_query($conn, $sql);
-            if ($result) {
+            if (mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_assoc($result)) {
                     echo '<a class="item course" href="?course_id='.$row['course_id'].'">'; //link to course page
                     echo '    <div class="content">';
@@ -20,8 +20,8 @@
                     echo '        <div class="description">';
                     echo $row['course_description'].
                         '<br>'.ucfirst($row['course_term']).' '.$row['course_year'].
-                        '<br>'.$row['team_size'].' Members';
-                        '<br>'.'# Students'; //Add number of students registered for the course
+                        '<br>'.$row['team_size'].' Members'.
+                        '<br>'.$account_manager->getNumRows("registered_student_list", "course_id", $row['course_id']).' Students'; //Add number of students registered for the course
                     echo '        </div>';
                     echo '    </div>';
                     echo '</a>'; 

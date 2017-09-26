@@ -52,25 +52,7 @@
             <!--Student tab-->
             <div class="ui bottom attached tab segment" data-tab="students">
                 <div class="ui link items" id="sub-wrapper">
-                    <?php
-                        $sql = "select u.first_name, u.last_name, u.email ".
-                            "from account as u inner join registered_student_list as r ".
-                            "on r.user_id=u.id where r.course_id='".$_GET['course_id']."'";
-                        $result = mysqli_query($conn, $sql);
-                        if ($result) {
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                echo '<a class="item">';
-                                echo '  <div class="content">';
-                                echo '      <div class="header">';
-                                echo $row['first_name']." ".$row['last_name'];
-                                echo '      </div>';
-                                echo '  </div>';
-                                echo '</a>';
-                            }
-                        } else {
-                                echo '<div class="header"> There are no students in this course. </div>';
-                        }
-                    ?>
+                    <?php $account_manager->getStudentList($_GET['course_id']); ?>
                 </div>
             </div>
         </div>

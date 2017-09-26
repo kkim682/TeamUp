@@ -1,8 +1,8 @@
 <?php
-        $sql = "select * from `course_list` where course_code='".$_GET['course_id']."' order by course_year desc, course_term desc, course_section desc"; //change this to course_id=
+        $sql = "select * from `course_list` where course_id='".$_GET['course_id']."' order by course_year desc, course_term desc, course_section desc";
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
-        $numStudents = $account_manager->getNumRows("registered_student_list", "course_code", $_GET['course_id']);
+        $numStudents = $account_manager->getNumRows("registered_student_list", "course_id", $_GET['course_id']);
 ?>
     <div class="pusher">
         <!--course page-->
@@ -51,25 +51,7 @@
             <!--Student tab-->
             <div class="ui bottom attached tab segment" data-tab="students">
                 <div class="ui link items" id="sub-wrapper">
-                    <?php
-                        $sql = "select u.first_name, u.last_name, u.email ".
-                            "from account as u inner join registered_student_list as r ".
-                            "on r.user_id=u.id where r.course_code='".$_GET['course_id']."'";
-                        $result = mysqli_query($conn, $sql);
-                        if ($result) {
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                echo '<a class="item">';
-                                echo '  <div class="content">';
-                                echo '      <div class="header">';
-                                echo $row['first_name']." ".$row['last_name'];
-                                echo '      </div>';
-                                echo '  </div>';
-                                echo '</a>';
-                            }
-                        } else {
-                                echo '<div class="header"> There are no students in this course. </div>';
-                        }
-                    ?>
+                    <?php $account_manager->getStudentList($_GET['course_id']); ?>
                 </div>
             </div>
         </div>
@@ -87,15 +69,15 @@
 
     <!--view course information modal-->
     <?php                 
-    $sql = "select c.course_name, c.course_section, c.course_description, c.course_year, c.course_term, c.course_code, ".
-            "u.first_name, u.last_name ".
-            "from registered_student_list as r inner join course_list as c on r.course_id=c.course_id ".
-            "inner join account as u on c.user_id=u.id ".
-            "where r.user_id='".$rows[7]."' ".
-            "order by c.course_year asc, c.course_term asc";
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_assoc($result);
-?>
+        $sql = "select c.course_name, c.course_section, c.course_description, c.course_year, c.course_term, c.course_code, ".
+                "u.first_name, u.last_name ".
+                "from registered_student_list as r inner join course_list as c on r.course_id=c.course_id ".
+                "inner join account as u on c.user_id=u.id ".
+                "where r.user_id='".$rows[7]."' ".
+                "order by c.course_year asc, c.course_term asc";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+    ?>
     <div class="ui mini modal" id="infoCourse-modal">
         <i class="close icon"></i>
         <div class="header">
