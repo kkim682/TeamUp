@@ -21,7 +21,7 @@
                     echo $row['course_description'].
                         '<br>'.ucfirst($row['course_term']).' '.$row['course_year'].
                         '<br>'.$row['team_size'].' Members'.
-                        '<br>'.$account_manager->getNumRows("registered_student_list", "course_id", $row['course_id']).' Students'; //Add number of students registered for the course
+                        '<br>'.$account_manager->getNumRows("registered_student_list", "course_id", $row['course_id']).' Students';
                     echo '        </div>';
                     echo '    </div>';
                     echo '</a>'; 

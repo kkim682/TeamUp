@@ -25,7 +25,8 @@
                         echo '        <div class="description">';
                         echo $row['course_description'].
                             '<br>'.ucfirst($row['course_term']).' '.$row['course_year'].
-                            '<br>'.$row['first_name']." ".$row['last_name'];
+                            '<br>'.$row['first_name']." ".$row['last_name'].
+                            '<br>'.$account_manager->getNumRows("registered_student_list", "course_id", $row['course_id']).' students';
                         echo '        </div>';
                         echo '    </div>';
                         echo '</a>'; 
