@@ -68,15 +68,8 @@
 
 
     <!--view course information modal-->
-    <?php                 
-        $sql = "select c.course_name, c.course_section, c.course_description, c.course_year, c.course_term, c.course_code, ".
-                "u.first_name, u.last_name ".
-                "from registered_student_list as r inner join course_list as c on r.course_id=c.course_id ".
-                "inner join account as u on c.user_id=u.id ".
-                "where r.user_id='".$rows[7]."' ".
-                "order by c.course_year asc, c.course_term asc";
-        $result = mysqli_query($conn, $sql);
-        $row = mysqli_fetch_assoc($result);
+    <?php
+        $row = $account_manager->retrieveCourseInfoById($_GET['course_id']);
     ?>
     <div class="ui mini modal" id="infoCourse-modal">
         <i class="close icon"></i>
@@ -108,7 +101,12 @@
             <div class="field">
                 <label>Instructor</label>
                 <p>
-                    <?php echo $row['first_name'].' '.$row['last_name'] ?>
+                    <?php
+                        $sql = "select first_name, last_name, email from account where id='".$row['user_id']."'";
+                        $result = mysqli_query($conn, $sql);
+                        $instructor = mysqli_fetch_assoc($result);
+                        echo $instructor['first_name'].' '.$instructor['last_name'];
+                    ?>
                 </p>
             </div>
 

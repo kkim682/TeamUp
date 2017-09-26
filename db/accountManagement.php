@@ -166,6 +166,21 @@ class AccountManager {
 	    $conn->close();
 	}
     
+    function retrieveCourseInfoById($courseId) {
+		require('db.php');
+		$conn = new mysqli($servername, $username, $password, $dbname);
+	    if (!$conn) {
+	        die('Could not connect: ' . mysql_error());
+	    }
+	    $result = $conn->query("SELECT * FROM course_list WHERE course_id = '$courseId';");
+	    if (!$result) {
+            return false;
+        }
+	    return mysqli_fetch_array($result);
+	    $result->close();
+	    $conn->close();
+	}
+    
     function getNumRows($table, $colm, $value) {
 		require('db.php');
 		$conn = new mysqli($servername, $username, $password, $dbname);
@@ -205,6 +220,35 @@ class AccountManager {
             }
         } else {
                 echo '<div class="header"> There are no students in this course. </div>';
+        }
+    }
+    
+    function getCourseList($sql) {
+		require('db.php');
+		$conn = new mysqli($servername, $username, $password, $dbname);
+	    if (!$conn) {
+	        die('Could not connect: ' . mysql_error());
+	    }
+        $result = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo '<a class="item course" href="?course_id='.$row['course_id'].'">'; //link to course page
+                echo '    <div class="content">';
+                echo '        <div class="header">';
+                echo $row['course_name'].' '.$row['course_section'];
+                echo '        </div>';
+                echo '        <div class="description">';
+                echo $row['course_description'].'<br>'.ucfirst($row['course_term']).' '.$row['course_year'];
+                if (array_key_exists('first_name', $row)) {
+                    echo '<br>'.$row['first_name']." ".$row['last_name'];
+                }
+                echo '<br>'.$this->getNumRows("registered_student_list", "course_id", $row['course_id']).' Students';
+                echo '        </div>';
+                echo '    </div>';
+                echo '</a>'; 
+            }
+        } else {
+            echo 'no course';
         }
     }
 }?>

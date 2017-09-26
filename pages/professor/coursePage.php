@@ -70,10 +70,8 @@
     <!--TODO edit course information-->
     <!--edit course information modal-->
     <?php
-        $sql = "select * from `course_list` where course_id='".$_GET['course_id']."' order by course_year desc, course_term desc, course_section desc";
-        $result = mysqli_query($conn, $sql);
-        $row = mysqli_fetch_assoc($result);
-?>
+        $row = $account_manager->retrieveCourseInfoById($_GET['course_id']);
+    ?>
     <div class="ui mini modal" id="infoCourse-modal">
         <i class="close icon"></i>
         <div class="header">

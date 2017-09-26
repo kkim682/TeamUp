@@ -8,32 +8,13 @@
     <div class="ui link items" id="sub-wrapper">
 
         <?php
-                $sql = "select c.course_id, c.course_name, c.course_section, c.course_description, c.course_year, c.course_term, c.course_code, ".
-                    "u.first_name, u.last_name ".
-                    "from registered_student_list as r inner join course_list as c on r.course_id=c.course_id ".
-                    "inner join account as u on c.user_id=u.id ".
-                    "where r.user_id='".$rows[7]."' ".
-                    "order by c.course_year asc, c.course_term asc";
-                $result = mysqli_query($conn, $sql);
-                if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        echo '<a class="item course" href="?course_id='.$row['course_id'].'">';
-                        echo '    <div class="content">';
-                        echo '        <div class="header">';
-                        echo $row['course_name'].' '.$row['course_section'];
-                        echo '        </div>';
-                        echo '        <div class="description">';
-                        echo $row['course_description'].
-                            '<br>'.ucfirst($row['course_term']).' '.$row['course_year'].
-                            '<br>'.$row['first_name']." ".$row['last_name'].
-                            '<br>'.$account_manager->getNumRows("registered_student_list", "course_id", $row['course_id']).' students';
-                        echo '        </div>';
-                        echo '    </div>';
-                        echo '</a>'; 
-                    }
-                } else {
-                    echo 'no course';
-                }
+            $sql = "select c.course_id, c.course_name, c.course_section, c.course_description, c.course_year, c.course_term, c.course_code, ".
+                "u.first_name, u.last_name ".
+                "from registered_student_list as r inner join course_list as c on r.course_id=c.course_id ".
+                "inner join account as u on c.user_id=u.id ".
+                "where r.user_id='".$rows[7]."' ".
+                "order by c.course_year asc, c.course_term asc";
+            $account_manager->getCourseList($sql);    
             ?>
     </div>
 </div>
