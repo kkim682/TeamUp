@@ -15,7 +15,7 @@
                 "where r.user_id='".$rows[7]."' ".
                 "order by c.course_year asc, c.course_term asc";
             $account_manager->getCourseList($sql);    
-            ?>
+        ?>
     </div>
 </div>
 
